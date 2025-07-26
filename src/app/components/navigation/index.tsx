@@ -1,11 +1,14 @@
+"use client";
 
-'use client';
-
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 const navVariants = {
   hidden: { y: -100, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100, damping: 10 } },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { type: "spring" as const, stiffness: 100, damping: 10 },
+  },
 };
 
 const linkVariants = {
