@@ -4,8 +4,8 @@
   "description": "Muhammad Andika Dayu Anglita Putra - Experienced Backend Developer with 3+ years expertise in Go, C#, Python, PHP, Laravel, React, and microservices architecture.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1e293b",
-  "theme_color": "#1e293b",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
   "orientation": "portrait-primary",
   "icons": [
     {

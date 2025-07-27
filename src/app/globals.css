@@ -18,39 +18,22 @@
 }
 
 :root {
-  /* Modern Light Mode Colors */
-  --foreground-rgb: 15, 23, 42; /* slate-900 */
-  --background-start-rgb: 248, 250, 252; /* slate-50 */
-  --background-end-rgb: 255, 255, 255; /* white */
-  --primary-accent: 99, 102, 241; /* indigo-500 */
-  --secondary-accent: 168, 85, 247; /* purple-500 */
-  --tertiary-accent: 14, 165, 233; /* sky-500 */
-  --card-background: 255, 255, 255; /* white */
-  --card-hover: 248, 250, 252; /* slate-50 */
-  --border-color: 226, 232, 240; /* slate-200 */
-  --text-muted: 100, 116, 139; /* slate-500 */
-  --gradient-from: 99, 102, 241; /* indigo-500 */
-  --gradient-to: 168, 85, 247; /* purple-500 */
+  /* Force Dark Mode Colors */
+  --foreground-rgb: 248, 250, 252; /* slate-50 */
+  --background-start-rgb: 15, 23, 42; /* slate-900 */
+  --background-end-rgb: 30, 41, 59; /* slate-800 */
+  --primary-accent: 129, 140, 248; /* indigo-400 */
+  --secondary-accent: 196, 181, 253; /* purple-400 */
+  --tertiary-accent: 56, 189, 248; /* sky-400 */
+  --card-background: 30, 41, 59; /* slate-800 */
+  --card-hover: 51, 65, 85; /* slate-700 */
+  --border-color: 51, 65, 85; /* slate-700 */
+  --text-muted: 148, 163, 184; /* slate-400 */
+  --gradient-from: 129, 140, 248; /* indigo-400 */
+  --gradient-to: 196, 181, 253; /* purple-400 */
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 248, 250, 252; /* slate-50 */
-    --background-start-rgb: 15, 23, 42; /* slate-900 */
-    --background-end-rgb: 30, 41, 59; /* slate-800 */
-    --primary-accent: 129, 140, 248; /* indigo-400 */
-    --secondary-accent: 196, 181, 253; /* purple-400 */
-    --tertiary-accent: 56, 189, 248; /* sky-400 */
-    --card-background: 30, 41, 59; /* slate-800 */
-    --card-hover: 51, 65, 85; /* slate-700 */
-    --border-color: 51, 65, 85; /* slate-700 */
-    --text-muted: 148, 163, 184; /* slate-400 */
-    --gradient-from: 129, 140, 248; /* indigo-400 */
-    --gradient-to: 196, 181, 253; /* purple-400 */
-  }
-}
-
+/* Remove light mode support - force dark mode only */
 html {
   scroll-behavior: smooth;
 }
@@ -58,14 +41,21 @@ html {
 body {
   font-family: 'Geist', sans-serif;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      135deg,
-      rgb(var(--background-start-rgb)) 0%,
-      rgb(var(--background-end-rgb)) 100%
-    );
+  background: linear-gradient(to bottom, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
   min-height: 100vh;
   transition: all 0.3s ease;
   overflow-x: hidden;
+}
+
+/* Force dark mode for all elements */
+*, *::before, *::after {
+  color-scheme: dark !important;
+}
+
+/* Ensure dark background always */
+html, body {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
 }
 
 /* Modern scrollbar */
