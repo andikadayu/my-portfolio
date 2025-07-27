@@ -2,97 +2,160 @@
 
 import { motion } from "framer-motion";
 
-const experiences = [
-  {
-    company: "PT Venturo Pro Indoesia",
-    role: "Full Stack Developer",
-    date: "Oct 2022 - Present",
-    description: [
-      "Build and optimize APIs using Go and C# .NET.",
-      "Work with microservices, RabbitMQ, gRPC, MongoDB, and Redis Cache.",
-      "Develop web admin applications using Next.js, Tailwind, Shadcn, and Redux.",
-    ],
-  },
-  {
-    company: "CV Global Solusindo",
-    role: "Full Stack Developer",
-    date: "Jul 2021 - Feb 2022",
-    description: [
-      "Developed enterprise websites, including web crawling applications.",
-      "Created desktop applications with Python.",
-      "Built Android apps with Java for real-time location tracking with Firebase.",
-      "Developed embedded systems and IoT solutions with Arduino.",
-    ],
-  },
-  {
-    company: "PT Internusa Cipta Solusi Perdana",
-    role: "Intern",
-    date: "Jun 2019 - Jun 2020",
-    description: [
-      "Built a website to manage large datasets in a warehouse using Laravel and PHP.",
-      "Managed data using Microsoft Excel.",
-    ],
-  },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
+const Experience = () => {
+  const experiences = [
+    {
+      title: "Full Stack Developer",
+      company: "PT Venturo Pro Indonesia",
+      period: "Oct 2022 - Present",
+      duration: "2+ years",
+      description:
+        "Build and optimize APIs using Go and C# .NET. Work with microservices, RabbitMQ, gRPC, MongoDB, and Redis Cache. Develop web admin applications using Next.js, Tailwind, Shadcn, and Redux.",
+      skills: [
+        "Go",
+        "C# .NET",
+        "Microservices",
+        "RabbitMQ",
+        "gRPC",
+        "MongoDB",
+        "Redis",
+        "Next.js",
+        "Tailwind",
+        "Redux",
+      ],
+      gradient: "from-blue-500 to-purple-600",
     },
-  },
-};
+    {
+      title: "Full Stack Developer",
+      company: "CV Global Solusindo",
+      period: "Jul 2021 - Feb 2022",
+      duration: "8 months",
+      description:
+        "Developed enterprise websites, including web crawling applications. Created desktop applications with Python. Built Android apps with Java for real-time location tracking with Firebase. Developed embedded systems and IoT solutions with Arduino.",
+      skills: [
+        "Python",
+        "Java",
+        "Android",
+        "Firebase",
+        "Arduino",
+        "IoT",
+        "Web Crawling",
+      ],
+      gradient: "from-green-500 to-teal-600",
+    },
+    {
+      title: "Intern",
+      company: "PT Internusa Cipta Solusi Perdana",
+      period: "Jun 2019 - Jun 2020",
+      duration: "1 year",
+      description:
+        "Built a website to manage large datasets in a warehouse using Laravel and PHP. Managed data using Microsoft Excel and gained foundational experience in web development.",
+      skills: ["Laravel", "PHP", "MySQL", "Data Management", "Microsoft Excel"],
+      gradient: "from-orange-500 to-red-600",
+    },
+  ];
 
-const itemVariants = {
-  hidden: { opacity: 0, x: -50 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: "easeOut" as const },
-  },
-};
-
-export default function Experience() {
   return (
-    <motion.section
+    <section
       id="experience"
-      className="container mx-auto py-24 px-4 sm:px-6 lg:px-8"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
+      className="py-20 bg-gradient-to-br from-gray-900/50 to-purple-900/20"
     >
-      <h2 className="text-4xl font-bold text-center mb-12">Experience</h2>
-      <div className="relative wrap overflow-hidden p-10 h-full">
-        <div className="border-2-2 absolute border-opacity-20 border-[rgb(var(--border-color))] h-full border left-1/2 transform -translate-x-1/2 hidden md:block"></div>
-        {experiences.map((exp, index) => (
-          <motion.div
-            key={index}
-            className={`mb-8 flex justify-between items-center w-full ${
-              index % 2 === 0 ? "md:right-timeline" : "md:left-timeline"
-            } flex-col md:flex-row`}
-            variants={itemVariants}
-          >
-            <div className="order-1 w-full md:w-5/12"></div>
-            <div className="z-20 flex items-center order-1 bg-[rgb(var(--secondary-accent))] shadow-xl w-8 h-8 rounded-full mb-4 md:mb-0"></div>
-            <div className="order-1 bg-[rgb(var(--card-background))] rounded-lg shadow-xl w-full md:w-5/12 px-6 py-4 border border-[rgb(var(--border-color))] ">
-              <h3 className="mb-3 font-bold text-xl text-[rgb(var(--primary-accent))] ">
-                {exp.role}
-              </h3>
-              <p className="text-sm leading-snug tracking-wide text-[rgb(var(--foreground-rgb))] text-opacity-100">
-                {exp.company} - {exp.date}
-              </p>
-              <ul className="list-disc list-inside mt-2 text-[rgb(var(--foreground-rgb))] ">
-                {exp.description.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </motion.section>
+      <motion.div
+        className="container mx-auto px-4"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="gradient-text">Work Experience</span>
+          </h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            My professional journey and career milestones
+          </p>
+        </motion.div>
+
+        <div className="max-w-4xl mx-auto">
+          <div className="relative">
+            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-0.5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"></div>
+
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={exp.title + "-" + index}
+                className={`relative flex items-center mb-12 ${
+                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                }`}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2, duration: 0.6 }}
+              >
+                <div
+                  className={`absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r ${exp.gradient} border-4 border-gray-900 z-10`}
+                ></div>
+
+                <motion.div
+                  className={`ml-16 md:ml-0 md:w-5/12 ${
+                    index % 2 === 0
+                      ? "md:mr-auto md:pr-8"
+                      : "md:ml-auto md:pl-8"
+                  }`}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <div className="glass-effect rounded-2xl p-6 border border-white/10">
+                    <div className="mb-4">
+                      <span
+                        className={`inline-block px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r ${exp.gradient} text-white`}
+                      >
+                        {exp.duration}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {exp.title}
+                    </h3>
+
+                    <h4
+                      className={`text-lg font-semibold mb-2 bg-gradient-to-r ${exp.gradient} bg-clip-text text-transparent`}
+                    >
+                      {exp.company}
+                    </h4>
+
+                    <p className="text-gray-400 text-sm mb-4">{exp.period}</p>
+
+                    <p className="text-gray-300 mb-6 leading-relaxed">
+                      {exp.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {exp.skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1 bg-white/10 rounded-full text-sm text-gray-300 hover:bg-white/20 transition-colors"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+
+                <div className="hidden md:block md:w-5/12"></div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </section>
   );
-}
+};
+
+export default Experience;
