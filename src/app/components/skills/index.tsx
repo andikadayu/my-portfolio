@@ -31,44 +31,44 @@ const Skills = () => {
       category: "Backend Development",
       color: "from-green-400 to-emerald-400",
       skills: [
-        { name: "Go", level: 90 },
-        { name: "C# .NET", level: 85 },
-        { name: "Python", level: 80 },
-        { name: "PHP", level: 85 },
-        { name: "Laravel", level: 80 },
+        { name: "Go", icon: "🐹" },
+        { name: "C# .NET", icon: "🔷" },
+        { name: "Python", icon: "🐍" },
+        { name: "PHP", icon: "🐘" },
+        { name: "Laravel", icon: "🔴" },
       ],
     },
     {
       category: "Frontend & Full-Stack",
       color: "from-blue-400 to-cyan-400",
       skills: [
-        { name: "React", level: 85 },
-        { name: "Next.js", level: 80 },
-        { name: "TypeScript", level: 75 },
-        { name: "Tailwind CSS", level: 85 },
-        { name: "Redux", level: 75 },
+        { name: "React", icon: "⚛️" },
+        { name: "Next.js", icon: "▲" },
+        { name: "TypeScript", icon: "🔷" },
+        { name: "Tailwind CSS", icon: "💨" },
+        { name: "Redux", icon: "🔄" },
       ],
     },
     {
       category: "Databases & Message Queues",
       color: "from-purple-400 to-pink-400",
       skills: [
-        { name: "MongoDB", level: 85 },
-        { name: "Redis Cache", level: 80 },
-        { name: "Firebase", level: 75 },
-        { name: "RabbitMQ", level: 80 },
-        { name: "gRPC", level: 75 },
+        { name: "MongoDB", icon: "🍃" },
+        { name: "Redis Cache", icon: "🔴" },
+        { name: "Firebase", icon: "🔥" },
+        { name: "RabbitMQ", icon: "🐰" },
+        { name: "gRPC", icon: "⚡" },
       ],
     },
     {
       category: "Mobile & IoT",
       color: "from-orange-400 to-red-400",
       skills: [
-        { name: "Java (Android)", level: 75 },
-        { name: "Arduino", level: 70 },
-        { name: "IoT Systems", level: 70 },
-        { name: "Embedded Systems", level: 65 },
-        { name: "Microservices", level: 85 },
+        { name: "Java (Android)", icon: "☕" },
+        { name: "Arduino", icon: "🔌" },
+        { name: "IoT Systems", icon: "📡" },
+        { name: "Embedded Systems", icon: "💾" },
+        { name: "Microservices", icon: "🔗" },
       ],
     },
   ];
@@ -95,7 +95,7 @@ const Skills = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {skills.map((category, categoryIndex) => (
             <motion.div
               key={category.category}
@@ -116,41 +116,20 @@ const Skills = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <motion.div
                     key={skill.name}
-                    className="space-y-2"
+                    className="flex items-center space-x-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300"
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{
                       delay: categoryIndex * 0.1 + skillIndex * 0.05,
                     }}
                     viewport={{ once: true }}
+                    whileHover={{ scale: 1.02 }}
                   >
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-300 font-medium">
+                    <div className="text-2xl flex-shrink-0">{skill.icon}</div>
+                    <div className="flex-grow">
+                      <span className="text-gray-300 font-medium block">
                         {skill.name}
                       </span>
-                      <span className="text-gray-400 text-sm">
-                        {skill.level}%
-                      </span>
-                    </div>
-                    <div
-                      className="w-full bg-gray-700 rounded-full h-2 overflow-hidden"
-                      role="progressbar"
-                      aria-valuenow={skill.level}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-label={`${skill.name} proficiency: ${skill.level}%`}
-                    >
-                      <motion.div
-                        className={`h-full bg-gradient-to-r ${category.color} rounded-full`}
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        transition={{
-                          duration: 1,
-                          delay: categoryIndex * 0.1 + skillIndex * 0.05 + 0.2,
-                          ease: "easeOut" as const,
-                        }}
-                        viewport={{ once: true }}
-                      />
                     </div>
                   </motion.div>
                 ))}
