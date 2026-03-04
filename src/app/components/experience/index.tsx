@@ -13,22 +13,14 @@ const experiences = [
     branch: "main",
     description:
       "Build and optimize APIs using Go and C# .NET. Work with microservices, RabbitMQ, gRPC, MongoDB, and Redis Cache. Develop web admin applications using Next.js, Tailwind, Shadcn, and Redux.",
-    skills: [
-      "Go", "C# .NET", "Microservices", "RabbitMQ", "gRPC",
-      "MongoDB", "Redis", "Next.js", "Tailwind", "Redux",
-    ],
-    color: "text-emerald-600",
-    borderColor: "border-emerald-200",
-    bgAccent: "bg-emerald-50",
-    dotColor: "bg-emerald-500",
-    lineColor: "from-emerald-300",
-    tagBg: "bg-emerald-50",
-    tagBorder: "border-emerald-200",
-    tagText: "text-emerald-700",
-    badgeBg: "bg-emerald-100",
-    badgeText: "text-emerald-700",
-    badgeBorder: "border-emerald-300",
+    skills: ["Go", "C# .NET", "Microservices", "RabbitMQ", "gRPC", "MongoDB", "Redis", "Next.js", "Tailwind", "Redux"],
+    accentColor: "#3fb950",
+    dotBg: "rgba(63,185,80,0.15)",
+    tagColor: "#3fb950",
     status: "ACTIVE",
+    statusBg: "rgba(63,185,80,0.15)",
+    statusColor: "#3fb950",
+    statusBorder: "rgba(63,185,80,0.4)",
   },
   {
     hash: "b7c2e45",
@@ -40,18 +32,13 @@ const experiences = [
     description:
       "Developed enterprise websites, web crawling applications. Created desktop applications with Python. Built Android apps with Java for real-time location tracking with Firebase. Developed embedded systems and IoT solutions with Arduino.",
     skills: ["Python", "Java", "Android", "Firebase", "Arduino", "IoT", "Web Crawling"],
-    color: "text-sky-600",
-    borderColor: "border-sky-200",
-    bgAccent: "bg-sky-50",
-    dotColor: "bg-sky-500",
-    lineColor: "from-sky-300",
-    tagBg: "bg-sky-50",
-    tagBorder: "border-sky-200",
-    tagText: "text-sky-700",
-    badgeBg: "bg-slate-100",
-    badgeText: "text-slate-500",
-    badgeBorder: "border-slate-200",
+    accentColor: "#58a6ff",
+    dotBg: "rgba(88,166,255,0.15)",
+    tagColor: "#58a6ff",
     status: "MERGED",
+    statusBg: "rgba(139,148,158,0.1)",
+    statusColor: "#8b949e",
+    statusBorder: "#30363d",
   },
   {
     hash: "c1a8f33",
@@ -63,18 +50,13 @@ const experiences = [
     description:
       "Built a website to manage large datasets in a warehouse using Laravel and PHP. Managed data using Microsoft Excel and gained foundational experience in web development.",
     skills: ["Laravel", "PHP", "MySQL", "Data Management", "Microsoft Excel"],
-    color: "text-violet-600",
-    borderColor: "border-violet-200",
-    bgAccent: "bg-violet-50",
-    dotColor: "bg-violet-500",
-    lineColor: "from-violet-300",
-    tagBg: "bg-violet-50",
-    tagBorder: "border-violet-200",
-    tagText: "text-violet-700",
-    badgeBg: "bg-slate-100",
-    badgeText: "text-slate-500",
-    badgeBorder: "border-slate-200",
+    accentColor: "#d2a8ff",
+    dotBg: "rgba(210,168,255,0.15)",
+    tagColor: "#d2a8ff",
     status: "MERGED",
+    statusBg: "rgba(139,148,158,0.1)",
+    statusColor: "#8b949e",
+    statusBorder: "#30363d",
   },
 ];
 
@@ -95,27 +77,26 @@ const ExperienceCard = ({
       viewport={{ once: true }}
       transition={{ delay: index * 0.15, duration: 0.5 }}
     >
-      {/* Vertical git line */}
+      {/* Git line */}
       {index < experiences.length - 1 && (
         <div
-          className={`absolute left-[19px] top-10 bottom-0 w-0.5 bg-gradient-to-b ${exp.lineColor} to-transparent`}
+          className="absolute left-[19px] top-10 bottom-0 w-px"
+          style={{ background: `linear-gradient(to bottom, ${exp.accentColor}50, transparent)` }}
         />
       )}
 
       <div className="flex items-start gap-4">
         {/* Commit dot */}
-        <div className="flex-shrink-0 flex flex-col items-center mt-1">
+        <div className="flex-shrink-0 mt-1">
           <motion.div
-            className={`w-10 h-10 rounded-full border-2 ${exp.borderColor} ${exp.bgAccent} flex items-center justify-center relative z-10 shadow-sm`}
+            className="w-10 h-10 rounded-full flex items-center justify-center relative z-10"
+            style={{ background: exp.dotBg, border: `1px solid ${exp.accentColor}50` }}
             whileHover={{ scale: 1.1 }}
           >
             <motion.div
-              className={`w-2.5 h-2.5 rounded-full ${exp.dotColor}`}
-              animate={
-                exp.status === "ACTIVE"
-                  ? { scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }
-                  : {}
-              }
+              className="w-2.5 h-2.5 rounded-full"
+              style={{ background: exp.accentColor }}
+              animate={exp.status === "ACTIVE" ? { scale: [1, 1.4, 1], opacity: [1, 0.6, 1] } : {}}
               transition={{ duration: 2, repeat: Infinity }}
             />
           </motion.div>
@@ -125,18 +106,24 @@ const ExperienceCard = ({
         <div className="flex-1 pb-8">
           <button className="w-full text-left" onClick={() => setOpen((o) => !o)}>
             <motion.div
-              className={`terminal-card border ${exp.borderColor} rounded-lg p-4 neon-hover cursor-pointer`}
-              whileHover={{ x: 4, boxShadow: `0 4px 20px ${exp.dotColor === "bg-emerald-500" ? "rgba(5,150,105,0.15)" : exp.dotColor === "bg-sky-500" ? "rgba(8,145,178,0.15)" : "rgba(124,58,237,0.12)"}` }}
+              className="rounded-md p-4 cursor-pointer"
+              style={{ background: "#161b22", border: "1px solid #30363d" }}
+              whileHover={{ x: 4, borderColor: exp.accentColor + "60", boxShadow: `0 4px 20px ${exp.accentColor}15` }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               {/* Commit meta */}
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-terminal text-xs mb-3">
-                <span className="text-amber-600">commit</span>
-                <span className="text-slate-400">{exp.hash}</span>
-                <span className="text-slate-400">on</span>
-                <span className={`${exp.color} font-medium`}>{exp.branch}</span>
+                <span style={{ color: "#e3b341" }}>commit</span>
+                <span style={{ color: "#8b949e" }}>{exp.hash}</span>
+                <span style={{ color: "#484f58" }}>on</span>
+                <span style={{ color: exp.accentColor }}>{exp.branch}</span>
                 <span
-                  className={`ml-auto px-1.5 py-0.5 text-xs font-terminal border rounded-full ${exp.badgeBg} ${exp.badgeText} ${exp.badgeBorder}`}
+                  className="ml-auto px-1.5 py-0.5 text-xs font-terminal rounded-full"
+                  style={{
+                    background: exp.statusBg,
+                    color: exp.statusColor,
+                    border: `1px solid ${exp.statusBorder}`,
+                  }}
                 >
                   {exp.status}
                 </span>
@@ -144,34 +131,23 @@ const ExperienceCard = ({
 
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-slate-800 font-bold text-base mb-0.5">
-                    {exp.title}
-                  </h3>
-                  <div className={`font-terminal text-sm ${exp.color} font-medium`}>
-                    {exp.company}
-                  </div>
+                  <h3 className="font-bold text-base mb-0.5" style={{ color: "#e6edf3" }}>{exp.title}</h3>
+                  <div className="font-terminal text-sm font-medium" style={{ color: exp.accentColor }}>{exp.company}</div>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <div className="font-terminal text-xs text-slate-400">{exp.period}</div>
-                  <div className={`font-terminal text-xs ${exp.color} mt-0.5`}>
-                    [{exp.duration}]
-                  </div>
+                  <div className="font-terminal text-xs" style={{ color: "#8b949e" }}>{exp.period}</div>
+                  <div className="font-terminal text-xs mt-0.5" style={{ color: exp.accentColor }}>[{exp.duration}]</div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1 mt-3 font-terminal text-xs text-slate-400">
-                <motion.span
-                  animate={{ rotate: open ? 90 : 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  ▶
-                </motion.span>
+              <div className="flex items-center gap-1 mt-3 font-terminal text-xs" style={{ color: "#484f58" }}>
+                <motion.span animate={{ rotate: open ? 90 : 0 }} transition={{ duration: 0.2 }}>▶</motion.span>
                 <span>{open ? "collapse" : "expand"} details</span>
               </div>
             </motion.div>
           </button>
 
-          {/* Expandable detail panel */}
+          {/* Detail panel */}
           <AnimatePresence>
             {open && (
               <motion.div
@@ -182,21 +158,20 @@ const ExperienceCard = ({
                 className="overflow-hidden"
               >
                 <div
-                  className={`border border-t-0 ${exp.borderColor} ${exp.bgAccent} rounded-b-lg p-4 font-terminal text-xs`}
+                  className="p-4 font-terminal text-xs rounded-b-md"
+                  style={{ background: "#0d1117", borderLeft: `1px solid #30363d`, borderRight: `1px solid #30363d`, borderBottom: `1px solid #30363d` }}
                 >
-                  <div className="text-slate-400 mb-2 italic">
-                    diff --git a/career.log b/career.log
+                  <div className="mb-2 italic" style={{ color: "#484f58" }}>diff --git a/career.log b/career.log</div>
+                  <div className="mb-3 leading-relaxed" style={{ color: "#8b949e", borderLeft: `2px solid ${exp.accentColor}50`, paddingLeft: "12px" }}>
+                    <span style={{ color: "#3fb950" }}>+&nbsp;</span>{exp.description}
                   </div>
-                  <div className="mb-3 text-slate-600 leading-relaxed border-l-2 border-emerald-300 pl-3">
-                    <span className="text-emerald-500">+&nbsp;</span>
-                    {exp.description}
-                  </div>
-                  <div className="text-slate-400 mb-2 italic">// technologies used:</div>
+                  <div className="mb-2 italic" style={{ color: "#484f58" }}>// technologies used:</div>
                   <div className="flex flex-wrap gap-1.5">
                     {exp.skills.map((skill) => (
                       <motion.span
                         key={skill}
-                        className={`px-2 py-0.5 border rounded-sm ${exp.tagBg} ${exp.tagBorder} ${exp.tagText}`}
+                        className="px-2 py-0.5 rounded-sm font-terminal text-xs"
+                        style={{ color: exp.tagColor, background: exp.dotBg, border: `1px solid ${exp.accentColor}30` }}
                         whileHover={{ scale: 1.05 }}
                       >
                         {skill}
@@ -216,11 +191,7 @@ const ExperienceCard = ({
 const Experience = () => {
   return (
     <section id="experience" className="py-20 relative overflow-hidden">
-      {/* Cheerful gradient bg band */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 pointer-events-none" />
-
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
         <motion.div
           className="mb-12"
           initial={{ opacity: 0, y: 20 }}
@@ -228,17 +199,17 @@ const Experience = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="font-terminal text-xs text-slate-400 mb-2">
+          <div className="font-terminal text-xs mb-2" style={{ color: "#484f58" }}>
             # career log — {experiences.length} commits
           </div>
           <h2 className="text-3xl md:text-4xl font-bold">
             <span className="gradient-text">git log</span>
-            <span className="text-slate-400 text-xl font-terminal"> --career --all</span>
+            <span className="font-terminal text-xl" style={{ color: "#484f58" }}> --career --all</span>
           </h2>
-          <div className="mt-3 font-terminal text-xs text-slate-400">
-            <span className="text-emerald-600">andika@dev</span>
-            <span className="text-slate-400">:~$&nbsp;</span>
-            <span className="text-slate-700">git log --oneline --graph --decorate</span>
+          <div className="mt-3 font-terminal text-xs" style={{ color: "#484f58" }}>
+            <span style={{ color: "#3fb950" }}>andika@dev</span>
+            <span style={{ color: "#484f58" }}>:~$&nbsp;</span>
+            <span style={{ color: "#c9d1d9" }}>git log --oneline --graph --decorate</span>
           </div>
         </motion.div>
 
@@ -249,13 +220,14 @@ const Experience = () => {
         </div>
 
         <motion.div
-          className="font-terminal text-xs text-slate-400 mt-2"
+          className="font-terminal text-xs mt-2"
+          style={{ color: "#484f58" }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.6 }}
         >
-          <span className="text-emerald-500">●</span> HEAD → main (origin/main, origin/HEAD)
+          <span style={{ color: "#3fb950" }}>●</span> HEAD → main (origin/main, origin/HEAD)
         </motion.div>
       </div>
     </section>

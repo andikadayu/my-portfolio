@@ -17,175 +17,151 @@
   font-style: normal;
 }
 
+/* ── Design tokens ─────────────────────────────────────────────
+   GitHub-dark inspired: comfortable dark, muted professional
+   accent palette with harmonious syntax-highlight colours.
+───────────────────────────────────────────────────────────────*/
 :root {
-  --foreground-rgb: 15, 23, 42;
-  --background-start-rgb: 240, 249, 255;
-  --background-end-rgb: 240, 253, 244;
-  --primary-accent: 5, 150, 105;
-  --secondary-accent: 8, 145, 178;
-  --tertiary-accent: 124, 58, 237;
-  --card-background: 255, 255, 255;
-  --card-hover: 248, 250, 252;
-  --border-color: 5, 150, 105;
-  --text-muted: 100, 116, 139;
+  /* Backgrounds */
+  --bg-base:        #0d1117;
+  --bg-card:        #161b22;
+  --bg-card-hover:  #1c2128;
+  --bg-surface:     #21262d;
+
+  /* Borders */
+  --border:         #30363d;
+  --border-muted:   #21262d;
+  --border-accent:  rgba(63, 185, 80, 0.35);
+
+  /* Text */
+  --text-primary:   #e6edf3;
+  --text-secondary: #c9d1d9;
+  --text-muted:     #8b949e;
+  --text-faint:     #484f58;
+
+  /* Accents — GitHub syntax palette */
+  --green:    #3fb950;  /* success / Go */
+  --blue:     #58a6ff;  /* links / keywords */
+  --purple:   #d2a8ff;  /* functions / types */
+  --orange:   #ffa657;  /* strings / numbers */
+  --cyan:     #79c0ff;  /* keys / identifiers */
+  --red:      #ff7b72;  /* deletions / errors */
+  --yellow:   #e3b341;  /* warnings / branches */
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
   font-family: 'Geist', sans-serif;
-  color: #0f172a;
-  background: linear-gradient(145deg, #f0f9ff 0%, #fafffe 50%, #f0fdf4 100%);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
 html, body {
-  background-color: #f0f9ff !important;
-  color: #0f172a !important;
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
 }
 
-/* Terminal font */
+/* Terminal monospace */
 .font-terminal {
   font-family: 'GeistMono', 'Courier New', Courier, monospace;
 }
 
-/* Cheerful emerald scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-}
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: #0d1117; }
+::-webkit-scrollbar-thumb  { background: #30363d; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #3fb950; }
 
-::-webkit-scrollbar-track {
-  background: #f0f9ff;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(5, 150, 105, 0.35);
-  border-radius: 2px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(5, 150, 105, 0.65);
-}
-
-/* Terminal card — light mode macOS style */
+/* ── Terminal card ──────────────────────────────────────────── */
 .terminal-card {
-  background: #ffffff;
-  border: 1px solid rgba(5, 150, 105, 0.2);
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.06),
-    0 4px 16px rgba(5, 150, 105, 0.08);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.25);
 }
 
 .terminal-card:hover {
-  border-color: rgba(5, 150, 105, 0.4);
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.08),
-    0 8px 28px rgba(5, 150, 105, 0.14);
+  border-color: rgba(63, 185, 80, 0.4);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 8px 28px rgba(63,185,80,0.08);
 }
 
-/* Glass effect — light */
+/* ── Glass effect ───────────────────────────────────────────── */
 .glass-effect {
   backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(5, 150, 105, 0.2);
+  background: rgba(22, 27, 34, 0.85);
+  border: 1px solid #30363d;
 }
 
-/* Gradient text — emerald to cyan */
+/* ── Gradient text — green → blue ──────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #059669, #0891b2);
+  background: linear-gradient(135deg, #3fb950, #58a6ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Hacker text — readable on white */
-.hacker-text {
-  color: #059669;
-  text-shadow: 0 0 12px rgba(5, 150, 105, 0.25);
-}
+/* ── Accent text helpers ────────────────────────────────────── */
+.hacker-text  { color: #3fb950; }
+.cyber-text   { color: #58a6ff; }
 
-/* Cyber text */
-.cyber-text {
-  color: #0891b2;
-}
-
-/* Scanlines — barely visible on light */
+/* ── Scanlines — very subtle ────────────────────────────────── */
 .scanlines {
   background: repeating-linear-gradient(
     0deg,
     transparent,
     transparent 3px,
-    rgba(0, 0, 0, 0.012) 3px,
-    rgba(0, 0, 0, 0.012) 4px
+    rgba(0,0,0,0.05) 3px,
+    rgba(0,0,0,0.05) 4px
   );
   pointer-events: none;
 }
 
-/* Blinking cursor */
+/* ── Blinking cursor ────────────────────────────────────────── */
 @keyframes blink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  50%       { opacity: 0; }
 }
+.cursor-blink { animation: blink 1.06s step-end infinite; }
 
-.cursor-blink {
-  animation: blink 1.06s step-end infinite;
-}
-
-/* Glitch — uses accent colors visible on light */
+/* ── Glitch animation ───────────────────────────────────────── */
 @keyframes glitch-1 {
-  0%, 100% { clip-path: inset(0 0 90% 0); transform: translateX(-2px); }
-  25% { clip-path: inset(40% 0 50% 0); transform: translateX(2px); }
-  50% { clip-path: inset(80% 0 5% 0); transform: translateX(-1px); }
-  75% { clip-path: inset(15% 0 75% 0); transform: translateX(3px); }
+  0%,100% { clip-path: inset(0 0 90% 0); transform: translateX(-2px); }
+  25%     { clip-path: inset(40% 0 50% 0); transform: translateX(2px); }
+  50%     { clip-path: inset(80% 0 5% 0);  transform: translateX(-1px); }
+  75%     { clip-path: inset(15% 0 75% 0); transform: translateX(3px); }
 }
-
 @keyframes glitch-2 {
-  0%, 100% { clip-path: inset(80% 0 5% 0); transform: translateX(2px); }
-  25% { clip-path: inset(20% 0 60% 0); transform: translateX(-2px); }
-  50% { clip-path: inset(60% 0 25% 0); transform: translateX(1px); }
-  75% { clip-path: inset(5% 0 85% 0); transform: translateX(-3px); }
+  0%,100% { clip-path: inset(80% 0 5% 0);  transform: translateX(2px); }
+  25%     { clip-path: inset(20% 0 60% 0); transform: translateX(-2px); }
+  50%     { clip-path: inset(60% 0 25% 0); transform: translateX(1px); }
+  75%     { clip-path: inset(5% 0 85% 0);  transform: translateX(-3px); }
 }
 
-/* Code block — light mode */
+/* ── Code block ─────────────────────────────────────────────── */
 .code-block {
-  background: #f8fafc;
-  border: 1px solid rgba(5, 150, 105, 0.15);
-  border-left: 3px solid rgba(5, 150, 105, 0.5);
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-left: 3px solid #3fb950;
   font-family: 'GeistMono', 'Courier New', monospace;
 }
 
-/* Neon hover — soft shadow on light */
+/* ── Neon hover — soft glow on dark ────────────────────────── */
 .neon-hover {
   transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
 }
-
 .neon-hover:hover {
-  box-shadow: 0 4px 20px rgba(5, 150, 105, 0.18), 0 0 0 1px rgba(5, 150, 105, 0.25) !important;
-  border-color: rgba(5, 150, 105, 0.45) !important;
+  box-shadow: 0 4px 24px rgba(63,185,80,0.12), 0 0 0 1px rgba(63,185,80,0.3) !important;
+  border-color: rgba(63,185,80,0.4) !important;
 }
 
-/* Section divider */
+/* ── Section divider ────────────────────────────────────────── */
 .section-divider {
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(5, 150, 105, 0.35), transparent);
-}
-
-/* Tag pill */
-.tag-pill {
-  background: rgba(5, 150, 105, 0.08);
-  border: 1px solid rgba(5, 150, 105, 0.2);
-  color: #047857;
-  font-family: 'GeistMono', monospace;
-  font-size: 0.7rem;
-  padding: 0.15rem 0.5rem;
-}
-
-.tag-pill:hover {
-  background: rgba(5, 150, 105, 0.15);
-  border-color: rgba(5, 150, 105, 0.4);
+  background: linear-gradient(90deg, transparent, #30363d, transparent);
 }
