@@ -9,17 +9,15 @@ const skills = [
     file: "backend.go",
     lang: "Go",
     color: "text-emerald-600",
-    barFrom: "from-emerald-500",
-    barTo: "to-teal-400",
     borderColor: "border-emerald-200",
     bgAccent: "bg-emerald-50",
     glowColor: "rgba(5,150,105,0.12)",
     skills: [
-      { name: "Go", icon: "🐹", level: 90 },
-      { name: "C# .NET", icon: "🔷", level: 88 },
-      { name: "Python", icon: "🐍", level: 82 },
-      { name: "PHP", icon: "🐘", level: 80 },
-      { name: "Laravel", icon: "🔴", level: 78 },
+      { name: "Go", icon: "🐹" },
+      { name: "C# .NET", icon: "🔷" },
+      { name: "Python", icon: "🐍" },
+      { name: "PHP", icon: "🐘" },
+      { name: "Laravel", icon: "🔴" },
     ],
   },
   {
@@ -27,17 +25,15 @@ const skills = [
     file: "frontend.tsx",
     lang: "TypeScript",
     color: "text-sky-600",
-    barFrom: "from-sky-500",
-    barTo: "to-cyan-400",
     borderColor: "border-sky-200",
     bgAccent: "bg-sky-50",
     glowColor: "rgba(8,145,178,0.12)",
     skills: [
-      { name: "React", icon: "⚛️", level: 85 },
-      { name: "Next.js", icon: "▲", level: 83 },
-      { name: "TypeScript", icon: "🔷", level: 82 },
-      { name: "Tailwind CSS", icon: "💨", level: 88 },
-      { name: "Redux", icon: "🔄", level: 78 },
+      { name: "React", icon: "⚛️" },
+      { name: "Next.js", icon: "▲" },
+      { name: "TypeScript", icon: "🔷" },
+      { name: "Tailwind CSS", icon: "💨" },
+      { name: "Redux", icon: "🔄" },
     ],
   },
   {
@@ -45,17 +41,15 @@ const skills = [
     file: "database.yaml",
     lang: "YAML",
     color: "text-violet-600",
-    barFrom: "from-violet-500",
-    barTo: "to-purple-400",
     borderColor: "border-violet-200",
     bgAccent: "bg-violet-50",
     glowColor: "rgba(124,58,237,0.12)",
     skills: [
-      { name: "MongoDB", icon: "🍃", level: 88 },
-      { name: "Redis Cache", icon: "🔴", level: 85 },
-      { name: "Firebase", icon: "🔥", level: 80 },
-      { name: "RabbitMQ", icon: "🐰", level: 82 },
-      { name: "gRPC", icon: "⚡", level: 80 },
+      { name: "MongoDB", icon: "🍃" },
+      { name: "Redis Cache", icon: "🔴" },
+      { name: "Firebase", icon: "🔥" },
+      { name: "RabbitMQ", icon: "🐰" },
+      { name: "gRPC", icon: "⚡" },
     ],
   },
   {
@@ -63,17 +57,15 @@ const skills = [
     file: "embedded.cpp",
     lang: "C++",
     color: "text-orange-600",
-    barFrom: "from-orange-500",
-    barTo: "to-amber-400",
     borderColor: "border-orange-200",
     bgAccent: "bg-orange-50",
     glowColor: "rgba(234,88,12,0.1)",
     skills: [
-      { name: "Java (Android)", icon: "☕", level: 78 },
-      { name: "Arduino", icon: "🔌", level: 75 },
-      { name: "IoT Systems", icon: "📡", level: 73 },
-      { name: "Embedded", icon: "💾", level: 70 },
-      { name: "Microservices", icon: "🔗", level: 90 },
+      { name: "Java (Android)", icon: "☕" },
+      { name: "Arduino", icon: "🔌" },
+      { name: "IoT Systems", icon: "📡" },
+      { name: "Embedded", icon: "💾" },
+      { name: "Microservices", icon: "🔗" },
     ],
   },
 ];
@@ -138,46 +130,24 @@ const TerminalCard = ({
               // {category.category.toLowerCase().replace(/ /g, "_")}
             </div>
 
-            {/* Skill entries */}
-            {category.skills.map((skill, si) => (
-              <motion.div
-                key={skill.name}
-                className="mb-3"
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.06 + si * 0.05, duration: 0.3 }}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-slate-400">&gt;</span>
-                    <span className={`${category.color} font-medium`}>{skill.name}</span>
-                    <span className="text-slate-300">=</span>
-                    <span className="text-orange-500">
-                      {skill.level}
-                      <span className="text-slate-400">%</span>
-                    </span>
-                  </div>
-                  <span className="text-base">{skill.icon}</span>
-                </div>
-
-                {/* Progress track */}
-                <div className="h-1 bg-slate-100 rounded-full relative overflow-hidden">
-                  <motion.div
-                    className={`h-full bg-gradient-to-r ${category.barFrom} ${category.barTo} rounded-full`}
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: skill.level / 100 }}
-                    viewport={{ once: true }}
-                    transition={{
-                      delay: index * 0.08 + si * 0.07 + 0.3,
-                      duration: 0.9,
-                      ease: "easeOut",
-                    }}
-                    style={{ transformOrigin: "left" }}
-                  />
-                </div>
-              </motion.div>
-            ))}
+            {/* Skill entries — list style */}
+            <div className="space-y-0.5">
+              {category.skills.map((skill, si) => (
+                <motion.div
+                  key={skill.name}
+                  className="flex items-center gap-2 py-1.5"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.06 + si * 0.04, duration: 0.3 }}
+                  whileHover={{ x: 3 }}
+                >
+                  <span className="text-slate-300 select-none">&gt;</span>
+                  <span className="text-base leading-none">{skill.icon}</span>
+                  <span className={`${category.color} font-medium`}>{skill.name}</span>
+                </motion.div>
+              ))}
+            </div>
 
             {/* Footer line */}
             <div className="text-slate-400 mt-2 italic">
