@@ -1,158 +1,261 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const skills = [
+  {
+    category: "Backend Development",
+    file: "backend.go",
+    lang: "Go",
+    color: "text-green-400",
+    borderColor: "border-green-500/30",
+    glowColor: "rgba(0,255,65,0.15)",
+    skills: [
+      { name: "Go", icon: "🐹", level: 90 },
+      { name: "C# .NET", icon: "🔷", level: 88 },
+      { name: "Python", icon: "🐍", level: 82 },
+      { name: "PHP", icon: "🐘", level: 80 },
+      { name: "Laravel", icon: "🔴", level: 78 },
+    ],
+  },
+  {
+    category: "Frontend & Full-Stack",
+    file: "frontend.tsx",
+    lang: "TypeScript",
+    color: "text-cyan-400",
+    borderColor: "border-cyan-500/30",
+    glowColor: "rgba(0,212,255,0.15)",
+    skills: [
+      { name: "React", icon: "⚛️", level: 85 },
+      { name: "Next.js", icon: "▲", level: 83 },
+      { name: "TypeScript", icon: "🔷", level: 82 },
+      { name: "Tailwind CSS", icon: "💨", level: 88 },
+      { name: "Redux", icon: "🔄", level: 78 },
+    ],
+  },
+  {
+    category: "Databases & Messaging",
+    file: "database.yaml",
+    lang: "YAML",
+    color: "text-purple-400",
+    borderColor: "border-purple-500/30",
+    glowColor: "rgba(168,85,247,0.15)",
+    skills: [
+      { name: "MongoDB", icon: "🍃", level: 88 },
+      { name: "Redis Cache", icon: "🔴", level: 85 },
+      { name: "Firebase", icon: "🔥", level: 80 },
+      { name: "RabbitMQ", icon: "🐰", level: 82 },
+      { name: "gRPC", icon: "⚡", level: 80 },
+    ],
+  },
+  {
+    category: "Mobile & IoT",
+    file: "embedded.cpp",
+    lang: "C++",
+    color: "text-orange-400",
+    borderColor: "border-orange-500/30",
+    glowColor: "rgba(251,146,60,0.15)",
+    skills: [
+      { name: "Java (Android)", icon: "☕", level: 78 },
+      { name: "Arduino", icon: "🔌", level: 75 },
+      { name: "IoT Systems", icon: "📡", level: 73 },
+      { name: "Embedded", icon: "💾", level: 70 },
+      { name: "Microservices", icon: "🔗", level: 90 },
+    ],
+  },
+];
+
+const TerminalCard = ({
+  category,
+  index,
+}: {
+  category: (typeof skills)[0];
+  index: number;
+}) => {
+  const [expanded, setExpanded] = useState(true);
+
+  return (
+    <motion.div
+      className={`terminal-card border ${category.borderColor} rounded-none overflow-hidden neon-hover`}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.12, duration: 0.5 }}
+      style={{ boxShadow: `0 0 0 1px rgba(0,0,0,0.5)` }}
+      whileHover={{ boxShadow: `0 0 30px ${category.glowColor}` }}
+    >
+      {/* Title bar */}
+      <div
+        className="flex items-center gap-2 px-4 py-2 bg-[#0d1117] border-b border-white/5 cursor-pointer select-none"
+        onClick={() => setExpanded((e) => !e)}
+      >
+        <div className="flex gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+          <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+        </div>
+        <span className="font-terminal text-xs text-gray-600 flex-1 ml-2">
+          {category.file}
+        </span>
+        <span
+          className={`font-terminal text-xs px-1.5 py-0.5 bg-[#1a1a2e] ${category.color}`}
+        >
+          {category.lang}
+        </span>
+        <motion.span
+          className="font-terminal text-xs text-gray-600 ml-2"
+          animate={{ rotate: expanded ? 0 : -90 }}
+          transition={{ duration: 0.2 }}
+        >
+          ▾
+        </motion.span>
+      </div>
+
+      {/* Code content */}
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            className="p-4 font-terminal text-xs"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            {/* Comment */}
+            <div className="text-gray-600 mb-3">
+              // {category.category.toLowerCase().replace(/ /g, "_")}
+            </div>
+
+            {/* Skill entries */}
+            {category.skills.map((skill, si) => (
+              <motion.div
+                key={skill.name}
+                className="mb-3"
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 + si * 0.05, duration: 0.3 }}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-600">&gt;</span>
+                    <span className={`${category.color}`}>{skill.name}</span>
+                    <span className="text-gray-700">=</span>
+                    <span className="text-orange-400/80">
+                      {skill.level}
+                      <span className="text-gray-600">%</span>
+                    </span>
+                  </div>
+                  <span className="text-gray-700">{skill.icon}</span>
+                </div>
+
+                {/* Progress bar */}
+                <div className="h-px bg-gray-800 relative overflow-hidden">
+                  <motion.div
+                    className={`h-full bg-gradient-to-r ${
+                      category.color.includes("green")
+                        ? "from-green-600 to-green-400"
+                        : category.color.includes("cyan")
+                        ? "from-cyan-600 to-cyan-400"
+                        : category.color.includes("purple")
+                        ? "from-purple-600 to-purple-400"
+                        : "from-orange-600 to-orange-400"
+                    }`}
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: skill.level / 100 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      delay: index * 0.1 + si * 0.07 + 0.3,
+                      duration: 0.8,
+                      ease: "easeOut",
+                    }}
+                    style={{ transformOrigin: "left" }}
+                  />
+                </div>
+              </motion.div>
+            ))}
+
+            {/* Closing line */}
+            <div className="text-gray-600 mt-2">
+              // {category.skills.length} skills loaded ✓
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
 
 const Skills = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut" as const,
-      },
-    },
-  };
-
-  const skills = [
-    {
-      category: "Backend Development",
-      color: "from-green-400 to-emerald-400",
-      skills: [
-        { name: "Go", icon: "🐹" },
-        { name: "C# .NET", icon: "🔷" },
-        { name: "Python", icon: "🐍" },
-        { name: "PHP", icon: "🐘" },
-        { name: "Laravel", icon: "🔴" },
-      ],
-    },
-    {
-      category: "Frontend & Full-Stack",
-      color: "from-blue-400 to-cyan-400",
-      skills: [
-        { name: "React", icon: "⚛️" },
-        { name: "Next.js", icon: "▲" },
-        { name: "TypeScript", icon: "🔷" },
-        { name: "Tailwind CSS", icon: "💨" },
-        { name: "Redux", icon: "🔄" },
-      ],
-    },
-    {
-      category: "Databases & Message Queues",
-      color: "from-purple-400 to-pink-400",
-      skills: [
-        { name: "MongoDB", icon: "🍃" },
-        { name: "Redis Cache", icon: "🔴" },
-        { name: "Firebase", icon: "🔥" },
-        { name: "RabbitMQ", icon: "🐰" },
-        { name: "gRPC", icon: "⚡" },
-      ],
-    },
-    {
-      category: "Mobile & IoT",
-      color: "from-orange-400 to-red-400",
-      skills: [
-        { name: "Java (Android)", icon: "☕" },
-        { name: "Arduino", icon: "🔌" },
-        { name: "IoT Systems", icon: "📡" },
-        { name: "Embedded Systems", icon: "💾" },
-        { name: "Microservices", icon: "🔗" },
-      ],
-    },
-  ];
-
   return (
     <section
       id="skills"
-      className="py-20 bg-gradient-to-br from-gray-900/50 to-blue-900/20"
+      className="py-20 relative overflow-hidden"
       aria-label="Technical Skills"
     >
-      <motion.div
-        className="container mx-auto px-4"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        <motion.div className="text-center mb-16" variants={itemVariants}>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="gradient-text">Skills & Expertise</span>
-          </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Technologies and tools I work with to bring ideas to life
-          </p>
+      {/* Background grid */}
+      <div
+        className="absolute inset-0 opacity-3 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,255,65,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,65,0.03) 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Section header */}
+        <motion.div
+          className="mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="font-terminal text-xs text-gray-600 mb-2">
+            # skills &amp; expertise — {skills.reduce((a, c) => a + c.skills.length, 0)} technologies
+          </div>
+          <div className="flex items-end gap-4">
+            <h2 className="text-3xl md:text-4xl font-bold">
+              <span className="gradient-text">tech_stack</span>
+              <span className="text-gray-600 text-2xl">.json</span>
+            </h2>
+          </div>
+          <div className="mt-3 font-terminal text-xs text-gray-600">
+            <span className="text-green-700">andika@dev</span>
+            <span className="text-gray-700">:~$&nbsp;</span>
+            <span className="text-white">cat skills.json | jq</span>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {skills.map((category, categoryIndex) => (
-            <motion.div
-              key={category.category}
-              className="glass-effect rounded-2xl p-6 border border-white/10"
-              variants={itemVariants}
-              whileHover={{ y: -5, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <div className="mb-6">
-                <h3
-                  className={`text-2xl font-bold bg-gradient-to-r ${category.color} bg-clip-text text-transparent`}
-                >
-                  {category.category}
-                </h3>
-              </div>
-
-              <div className="space-y-4">
-                {category.skills.map((skill, skillIndex) => (
-                  <motion.div
-                    key={skill.name}
-                    className="flex items-center space-x-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{
-                      delay: categoryIndex * 0.1 + skillIndex * 0.05,
-                    }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="text-2xl flex-shrink-0">{skill.icon}</div>
-                    <div className="flex-grow">
-                      <span className="text-gray-300 font-medium block">
-                        {skill.name}
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+        {/* Cards grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
+          {skills.map((category, i) => (
+            <TerminalCard key={category.category} category={category} index={i} />
           ))}
         </div>
 
-        <motion.div className="text-center mt-16" variants={itemVariants}>
-          <p className="text-lg text-gray-300 mb-8">
-            Always learning and exploring new technologies to stay ahead of the
-            curve
-          </p>
-          <motion.div
-            className="inline-flex items-center space-x-2 text-blue-400"
-            animate={{ x: [0, 5, 0] }}
+        {/* Footer note */}
+        <motion.div
+          className="font-terminal text-xs text-gray-600 flex items-center gap-3"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          <motion.span
+            className="text-green-500"
+            animate={{ opacity: [0.4, 1, 0.4] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <span>Currently learning</span>
-            <span className="font-semibold">AI/ML Integration</span>
-          </motion.div>
+            ●
+          </motion.span>
+          <span>Currently learning:</span>
+          <span className="text-cyan-400">AI/ML Integration</span>
+          <span className="text-gray-700">|</span>
+          <span className="text-green-400">LLM APIs</span>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };

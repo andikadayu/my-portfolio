@@ -1,106 +1,145 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [blink, setBlink] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => setBlink((b) => !b), 530);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
-    { href: "#about", label: "About" },
-    { href: "#skills", label: "Skills" },
-    { href: "#projects", label: "Projects" },
-    { href: "#experience", label: "Experience" },
-    { href: "#contact", label: "Contact" },
+    { href: "#about", label: "~/about", index: "01" },
+    { href: "#skills", label: "~/skills", index: "02" },
+    { href: "#projects", label: "~/projects", index: "03" },
+    { href: "#experience", label: "~/experience", index: "04" },
+    { href: "#contact", label: "~/contact", index: "05" },
   ];
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-white/10"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+        scrolled
+          ? "bg-[#080c14]/98 border-green-500/30 backdrop-blur-md"
+          : "bg-[#080c14]/80 border-green-500/10 backdrop-blur-sm"
+      }`}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <motion.div
-            className="text-2xl font-bold gradient-text"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            Andika Dayu
-          </motion.div>
+      {/* Top green scan line */}
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/60 to-transparent"
+        animate={{ opacity: [0.3, 1, 0.3] }}
+        transition={{ duration: 3, repeat: Infinity }}
+      />
 
-          <div className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          {/* Logo — terminal prompt */}
+          <motion.a
+            href="#about"
+            className="font-terminal flex items-center gap-0 text-sm select-none"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+          >
+            <span className="text-green-600">root</span>
+            <span className="text-gray-500">@</span>
+            <span className="text-green-400">andika</span>
+            <span className="text-gray-500">:</span>
+            <span className="text-blue-400">~</span>
+            <span className="text-gray-500">$&nbsp;</span>
+            <span className="text-green-300">andika_dayu</span>
+            <span
+              className={`text-green-400 transition-opacity duration-75 ${
+                blink ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              ▮
+            </span>
+          </motion.a>
+
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center space-x-1">
+            {navLinks.map((link, i) => (
               <motion.a
                 key={link.href}
                 href={link.href}
-                className="text-gray-300 hover:text-white transition-colors duration-300 relative group"
-                whileHover={{ y: -2 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                className="font-terminal group relative px-3 py-1.5 text-xs text-gray-500 hover:text-green-400 transition-colors duration-200"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                whileHover={{ y: -1 }}
               >
+                <span className="text-green-700 group-hover:text-green-500 transition-colors">
+                  {link.index}&nbsp;
+                </span>
                 {link.label}
                 <motion.div
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 origin-left"
+                  className="absolute bottom-0 left-0 right-0 h-px bg-green-500/60 origin-left"
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.2 }}
                 />
               </motion.a>
             ))}
           </div>
 
+          {/* Mobile toggle */}
           <motion.button
-            className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
+            className="md:hidden font-terminal text-green-500 text-xs px-2 py-1 border border-green-500/30 hover:border-green-500/60 hover:bg-green-500/5 transition-all"
             onClick={() => setIsOpen(!isOpen)}
             whileTap={{ scale: 0.95 }}
+            aria-label="Toggle menu"
           >
-            <div className="w-6 h-6 flex flex-col justify-center space-y-1">
-              <motion.div
-                className="w-full h-0.5 bg-current"
-                animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-              <motion.div
-                className="w-full h-0.5 bg-current"
-                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-              <motion.div
-                className="w-full h-0.5 bg-current"
-                animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
+            {isOpen ? "[×]" : "[≡]"}
           </motion.button>
         </div>
 
-        {isOpen && (
-          <motion.div
-            className="md:hidden mt-4 glass-effect rounded-lg p-4 border border-white/10"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                className="block py-3 text-gray-300 hover:text-white transition-colors duration-300"
-                onClick={() => setIsOpen(false)}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.3 }}
-                whileHover={{ x: 10 }}
-              >
-                {link.label}
-              </motion.a>
-            ))}
-          </motion.div>
-        )}
+        {/* Mobile dropdown */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="md:hidden mt-3 bg-[#0a0f1a] border border-green-500/20 p-4"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <div className="font-terminal text-xs text-gray-600 mb-3">
+                # navigation menu
+              </div>
+              {navLinks.map((link, index) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  className="flex items-center gap-2 py-2 text-sm text-gray-400 hover:text-green-400 transition-colors font-terminal"
+                  onClick={() => setIsOpen(false)}
+                  initial={{ opacity: 0, x: -15 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.06, duration: 0.25 }}
+                  whileHover={{ x: 4 }}
+                >
+                  <span className="text-green-700">&gt;</span>
+                  {link.label}
+                </motion.a>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   );
