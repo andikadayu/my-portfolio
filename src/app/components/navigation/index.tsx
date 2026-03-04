@@ -31,8 +31,8 @@ const Navigation = () => {
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
         scrolled
-          ? "bg-[#080c14]/98 border-green-500/30 backdrop-blur-md"
-          : "bg-[#080c14]/80 border-green-500/10 backdrop-blur-sm"
+          ? "bg-white/95 border-emerald-200 shadow-sm backdrop-blur-md"
+          : "bg-white/80 border-emerald-100/60 backdrop-blur-sm"
       }`}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -40,33 +40,32 @@ const Navigation = () => {
       role="navigation"
       aria-label="Main navigation"
     >
-      {/* Top green scan line */}
+      {/* Cheerful top accent line */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/60 to-transparent"
-        animate={{ opacity: [0.3, 1, 0.3] }}
+        className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400"
+        animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 3, repeat: Infinity }}
       />
 
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo — terminal prompt */}
+          {/* Logo — terminal prompt on white */}
           <motion.a
             href="#about"
             className="font-terminal flex items-center gap-0 text-sm select-none"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
           >
-            <span className="text-green-600">root</span>
-            <span className="text-gray-500">@</span>
-            <span className="text-green-400">andika</span>
-            <span className="text-gray-500">:</span>
-            <span className="text-blue-400">~</span>
-            <span className="text-gray-500">$&nbsp;</span>
-            <span className="text-green-300">andika_dayu</span>
+            <span className="text-emerald-600">root</span>
+            <span className="text-slate-400">@</span>
+            <span className="text-emerald-700 font-semibold">andika</span>
+            <span className="text-slate-400">:</span>
+            <span className="text-sky-500">~</span>
+            <span className="text-slate-400">$&nbsp;</span>
+            <span className="text-slate-700">andika_dayu</span>
             <span
-              className={`text-green-400 transition-opacity duration-75 ${
-                blink ? "opacity-100" : "opacity-0"
-              }`}
+              className="text-emerald-500 transition-opacity duration-75"
+              style={{ opacity: blink ? 1 : 0 }}
             >
               ▮
             </span>
@@ -78,18 +77,18 @@ const Navigation = () => {
               <motion.a
                 key={link.href}
                 href={link.href}
-                className="font-terminal group relative px-3 py-1.5 text-xs text-gray-500 hover:text-green-400 transition-colors duration-200"
+                className="font-terminal group relative px-3 py-1.5 text-xs text-slate-500 hover:text-emerald-600 transition-colors duration-200"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08, duration: 0.4 }}
                 whileHover={{ y: -1 }}
               >
-                <span className="text-green-700 group-hover:text-green-500 transition-colors">
+                <span className="text-emerald-300 group-hover:text-emerald-500 transition-colors">
                   {link.index}&nbsp;
                 </span>
                 {link.label}
                 <motion.div
-                  className="absolute bottom-0 left-0 right-0 h-px bg-green-500/60 origin-left"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 origin-left rounded-full"
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
                   transition={{ duration: 0.2 }}
@@ -100,7 +99,7 @@ const Navigation = () => {
 
           {/* Mobile toggle */}
           <motion.button
-            className="md:hidden font-terminal text-green-500 text-xs px-2 py-1 border border-green-500/30 hover:border-green-500/60 hover:bg-green-500/5 transition-all"
+            className="md:hidden font-terminal text-emerald-600 text-xs px-2 py-1 border border-emerald-200 hover:border-emerald-400 hover:bg-emerald-50 transition-all rounded-sm"
             onClick={() => setIsOpen(!isOpen)}
             whileTap={{ scale: 0.95 }}
             aria-label="Toggle menu"
@@ -113,27 +112,27 @@ const Navigation = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="md:hidden mt-3 bg-[#0a0f1a] border border-green-500/20 p-4"
+              className="md:hidden mt-3 bg-white border border-emerald-100 shadow-lg p-4 rounded-sm"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25 }}
             >
-              <div className="font-terminal text-xs text-gray-600 mb-3">
+              <div className="font-terminal text-xs text-slate-400 mb-3">
                 # navigation menu
               </div>
               {navLinks.map((link, index) => (
                 <motion.a
                   key={link.href}
                   href={link.href}
-                  className="flex items-center gap-2 py-2 text-sm text-gray-400 hover:text-green-400 transition-colors font-terminal"
+                  className="flex items-center gap-2 py-2 text-sm text-slate-500 hover:text-emerald-600 transition-colors font-terminal"
                   onClick={() => setIsOpen(false)}
                   initial={{ opacity: 0, x: -15 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.06, duration: 0.25 }}
                   whileHover={{ x: 4 }}
                 >
-                  <span className="text-green-700">&gt;</span>
+                  <span className="text-emerald-400">&gt;</span>
                   {link.label}
                 </motion.a>
               ))}

@@ -11,8 +11,10 @@ const contactMethods = [
     value: "dikapolk@gmail.com",
     desc: "Drop me a line anytime",
     link: "mailto:dikapolk@gmail.com",
-    color: "text-green-400",
-    borderColor: "border-green-500/30",
+    color: "text-emerald-600",
+    borderColor: "border-emerald-200",
+    bgAccent: "bg-emerald-50",
+    tagText: "text-emerald-700",
   },
   {
     cmd: "telegram",
@@ -21,8 +23,10 @@ const contactMethods = [
     value: "@andikadayu",
     desc: "Message me on Telegram",
     link: "http://t.me/andikadayu",
-    color: "text-cyan-400",
-    borderColor: "border-cyan-500/30",
+    color: "text-sky-600",
+    borderColor: "border-sky-200",
+    bgAccent: "bg-sky-50",
+    tagText: "text-sky-700",
   },
   {
     cmd: "echo",
@@ -31,29 +35,33 @@ const contactMethods = [
     value: "Malang, Indonesia",
     desc: "Open to remote work worldwide",
     link: "#",
-    color: "text-purple-400",
-    borderColor: "border-purple-500/30",
+    color: "text-violet-600",
+    borderColor: "border-violet-200",
+    bgAccent: "bg-violet-50",
+    tagText: "text-violet-700",
   },
 ];
 
 const socialLinks = [
   {
     cmd: "gh",
-    args: "profile andikadayu",
+    args: "andikadayu",
     label: "GitHub Personal",
     url: "https://github.com/andikadayu",
-    desc: "Personal repositories",
-    color: "text-gray-400",
-    borderColor: "border-gray-600/30",
+    desc: "Personal repos",
+    color: "text-slate-700",
+    borderColor: "border-slate-200",
+    bgAccent: "bg-slate-50",
   },
   {
     cmd: "gh",
-    args: "profile andikaventuro",
+    args: "andikaventuro",
     label: "GitHub Work",
     url: "https://github.com/andikaventuro",
-    desc: "Work repositories",
-    color: "text-gray-400",
-    borderColor: "border-gray-600/30",
+    desc: "Work repos",
+    color: "text-slate-700",
+    borderColor: "border-slate-200",
+    bgAccent: "bg-slate-50",
   },
   {
     cmd: "linkedin",
@@ -61,17 +69,9 @@ const socialLinks = [
     label: "LinkedIn",
     url: "https://www.linkedin.com/in/muhammad-andika-dayu-anglita-putra-796838142/",
     desc: "Professional network",
-    color: "text-blue-400",
-    borderColor: "border-blue-500/30",
-  },
-  {
-    cmd: "whatsapp",
-    args: "+62 821 7462 0190",
-    label: "WhatsApp",
-    url: "https://wa.me/6282174620190",
-    desc: "Quick messages",
-    color: "text-green-400",
-    borderColor: "border-green-500/30",
+    color: "text-sky-600",
+    borderColor: "border-sky-200",
+    bgAccent: "bg-sky-50",
   },
 ];
 
@@ -82,7 +82,10 @@ const BlinkCursor = () => {
     return () => clearInterval(t);
   }, []);
   return (
-    <span className={`text-green-400 transition-opacity duration-75 ${show ? "opacity-100" : "opacity-0"}`}>
+    <span
+      className="text-emerald-500 transition-opacity duration-75"
+      style={{ opacity: show ? 1 : 0 }}
+    >
       ▮
     </span>
   );
@@ -108,12 +111,15 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-20 relative overflow-hidden">
-      {/* Subtle bg grid */}
+      {/* Cheerful gradient bg */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-emerald-50/30 to-sky-50/30 pointer-events-none" />
+
+      {/* Dot grid */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 opacity-25 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,255,65,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,65,0.015) 1px, transparent 1px)`,
-          backgroundSize: "55px 55px",
+          backgroundImage: `radial-gradient(rgba(5,150,105,0.18) 1px, transparent 1px)`,
+          backgroundSize: "26px 26px",
         }}
       />
 
@@ -126,38 +132,38 @@ const Contact = () => {
       >
         {/* Header */}
         <motion.div className="mb-12" variants={itemVariants}>
-          <div className="font-terminal text-xs text-gray-600 mb-2">
+          <div className="font-terminal text-xs text-slate-400 mb-2">
             # contact — establish connection
           </div>
           <h2 className="text-3xl md:text-4xl font-bold">
             <span className="gradient-text">ssh</span>
-            <span className="text-gray-600 text-xl font-terminal"> andika@malang.id</span>
+            <span className="text-slate-400 text-xl font-terminal"> andika@malang.id</span>
           </h2>
-          <div className="mt-3 font-terminal text-xs text-gray-600">
-            <span className="text-green-700">local</span>
-            <span className="text-gray-700">:~$&nbsp;</span>
-            <span className="text-white">ssh -i ~/.ssh/contact andika@andikadayu.my.id</span>
+          <div className="mt-3 font-terminal text-xs text-slate-400">
+            <span className="text-emerald-600">local</span>
+            <span className="text-slate-400">:~$&nbsp;</span>
+            <span className="text-slate-700">ssh -i ~/.ssh/contact andika@andikadayu.my.id</span>
           </div>
         </motion.div>
 
-        {/* Contact methods — terminal session output */}
+        {/* SSH terminal window */}
         <motion.div variants={itemVariants} className="mb-8">
-          <div className="terminal-card rounded-none max-w-2xl">
+          <div className="terminal-card rounded-lg overflow-hidden max-w-2xl" style={{ boxShadow: "0 4px 24px rgba(5,150,105,0.1)" }}>
             {/* Title bar */}
-            <div className="flex items-center gap-2 px-4 py-2 bg-[#0d1117] border-b border-green-500/20">
+            <div className="flex items-center gap-2 px-4 py-3 bg-slate-50 border-b border-slate-100">
               <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-                <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+                <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
               </div>
-              <span className="font-terminal text-xs text-gray-600 ml-2">
+              <span className="font-terminal text-xs text-slate-400 ml-2">
                 ssh — andika@andikadayu.my.id — 80×24
               </span>
             </div>
 
             {/* Terminal body */}
-            <div className="p-5 font-terminal text-xs space-y-4">
-              <div className="text-gray-600">
+            <div className="p-5 font-terminal text-xs space-y-4 bg-white">
+              <div className="text-slate-400 italic">
                 Connected to andikadayu.my.id · Welcome, traveller.
               </div>
 
@@ -169,26 +175,22 @@ const Contact = () => {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.12, duration: 0.4 }}
                 >
-                  {/* Command line */}
                   <div className="flex items-center gap-1 mb-1">
-                    <span className="text-green-600">andika@dev</span>
-                    <span className="text-gray-600">:~$&nbsp;</span>
-                    <span className="text-white">{method.cmd}</span>
-                    <span className="text-orange-300">&nbsp;{method.args}</span>
+                    <span className="text-emerald-600">andika@dev</span>
+                    <span className="text-slate-400">:~$&nbsp;</span>
+                    <span className="text-slate-700">{method.cmd}</span>
+                    <span className="text-orange-500">&nbsp;{method.args}</span>
                   </div>
-                  {/* Output */}
                   <motion.a
                     href={method.link}
-                    className={`flex items-start gap-3 pl-3 border-l-2 ${method.borderColor} hover:bg-green-500/5 transition-all p-2 group`}
+                    className={`flex items-center gap-3 pl-3 border-l-2 ${method.borderColor} ${method.bgAccent} hover:opacity-80 transition-all p-2 rounded-r-sm group`}
                     whileHover={{ x: 4 }}
                   >
                     <div>
-                      <div className={`${method.color} font-semibold`}>
-                        {method.value}
-                      </div>
-                      <div className="text-gray-600">{method.desc}</div>
+                      <div className={`${method.color} font-semibold`}>{method.value}</div>
+                      <div className="text-slate-500">{method.desc}</div>
                     </div>
-                    <span className="ml-auto text-gray-700 group-hover:text-green-500 transition-colors">
+                    <span className="ml-auto text-slate-400 group-hover:text-emerald-500 transition-colors">
                       →
                     </span>
                   </motion.a>
@@ -200,24 +202,25 @@ const Contact = () => {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.45 }}
               >
-                <div className="flex items-center gap-1 mb-1">
-                  <span className="text-green-600">andika@dev</span>
-                  <span className="text-gray-600">:~$&nbsp;</span>
-                  <span className="text-white">send-email --subject</span>
-                  <span className="text-orange-300">&nbsp;&quot;Let&apos;s collaborate&quot;</span>
+                <div className="flex items-center gap-1 mb-2">
+                  <span className="text-emerald-600">andika@dev</span>
+                  <span className="text-slate-400">:~$&nbsp;</span>
+                  <span className="text-slate-700">send-email --subject</span>
+                  <span className="text-orange-500">&nbsp;&quot;Let&apos;s collaborate&quot;</span>
                 </div>
                 <motion.a
                   href="mailto:dikapolk@gmail.com"
-                  className="inline-flex items-center gap-2 mt-2 px-4 py-2 border border-green-500/50 text-green-400 text-xs font-terminal hover:bg-green-500/10 hover:border-green-400 transition-all"
+                  className="inline-flex items-center gap-2 mt-1 px-4 py-2 bg-emerald-500 text-white text-xs font-terminal rounded-sm hover:bg-emerald-600 transition-all shadow-sm"
                   whileHover={{
                     scale: 1.02,
-                    boxShadow: "0 0 20px rgba(0,255,65,0.2)",
+                    boxShadow: "0 4px 16px rgba(5,150,105,0.35)",
+                    y: -1,
                   }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  <span className="text-green-700">$</span>
+                  <span className="text-emerald-200">$</span>
                   ./send-message.sh
                   <motion.span
                     animate={{ x: [0, 3, 0] }}
@@ -228,45 +231,45 @@ const Contact = () => {
                 </motion.a>
               </motion.div>
 
-              {/* Prompt waiting */}
+              {/* Waiting prompt */}
               <div className="flex items-center gap-1">
-                <span className="text-green-600">andika@dev</span>
-                <span className="text-gray-600">:~$&nbsp;</span>
+                <span className="text-emerald-600">andika@dev</span>
+                <span className="text-slate-400">:~$&nbsp;</span>
                 <BlinkCursor />
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Social links */}
+        {/* Social links — 3 cards (no WhatsApp) */}
         <motion.div variants={itemVariants}>
-          <div className="font-terminal text-xs text-gray-600 mb-4">
+          <div className="font-terminal text-xs text-slate-400 mb-4">
             # social links — find me online
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
             {socialLinks.map((social, i) => (
               <motion.a
                 key={social.label}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`terminal-card border ${social.borderColor} p-3 neon-hover block`}
+                className={`terminal-card border ${social.borderColor} rounded-lg p-3 neon-hover block ${social.bgAccent}`}
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.4 }}
-                whileHover={{ y: -3 }}
+                whileHover={{ y: -3, scale: 1.02 }}
               >
                 <div className="font-terminal text-xs">
                   <div className="flex items-center gap-1 mb-1.5">
-                    <span className="text-green-600">$</span>
-                    <span className="text-white">{social.cmd}</span>
-                    <span className={`${social.color} text-xs`}>{social.args}</span>
+                    <span className="text-emerald-500">$</span>
+                    <span className="text-slate-600">{social.cmd}</span>
+                    <span className={`${social.color}`}>{social.args}</span>
                   </div>
                   <div className={`font-semibold text-xs ${social.color} mb-0.5`}>
                     {social.label}
                   </div>
-                  <div className="text-gray-700 text-xs">{social.desc}</div>
+                  <div className="text-slate-400 text-xs">{social.desc}</div>
                 </div>
               </motion.a>
             ))}
@@ -275,24 +278,24 @@ const Contact = () => {
 
         {/* Footer */}
         <motion.div
-          className="mt-16 pt-6 border-t border-green-500/10"
+          className="mt-16 pt-6 border-t border-slate-100"
           variants={itemVariants}
         >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 font-terminal text-xs text-gray-700">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 font-terminal text-xs text-slate-400">
             <div>
-              <span className="text-green-600">©</span> 2024 Muhammad Andika Dayu Anglita Putra
+              <span className="text-emerald-500">©</span> 2024 Muhammad Andika Dayu Anglita Putra
             </div>
             <div className="flex items-center gap-2">
               <span>Built with</span>
-              <span className="text-cyan-600">Next.js</span>
+              <span className="text-sky-600 font-medium">Next.js</span>
               <span>+</span>
-              <span className="text-green-600">Framer Motion</span>
+              <span className="text-emerald-600 font-medium">Framer Motion</span>
               <span>+</span>
-              <span className="text-blue-600">TypeScript</span>
+              <span className="text-blue-600 font-medium">TypeScript</span>
             </div>
             <div className="flex items-center gap-1">
               <motion.span
-                className="text-green-500"
+                className="text-emerald-500"
                 animate={{ opacity: [0.3, 1, 0.3] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
