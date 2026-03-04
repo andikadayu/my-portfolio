@@ -1,143 +1,245 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const projects = [
   {
-    title: "Warehouse Management System (Laravel + React)",
+    id: "proj-001",
+    title: "Warehouse Management System",
+    slug: "warehouse-mgmt",
     description:
-      "Developed comprehensive warehouse management system with inventory tracking, order management, and real-time stock monitoring. Features automated reorder points and detailed reporting.",
+      "Comprehensive warehouse management with inventory tracking, order management, and real-time stock monitoring. Automated reorder points and detailed reporting.",
     tech: ["Laravel", "React", "MySQL", "REST APIs"],
-    image: "/api/placeholder/400/250",
+    lang: "PHP",
+    langColor: "#d2a8ff",
     link: "#",
+    lines: 12400,
+    commits: 234,
   },
   {
-    title: "Frontend Development (Next.js, Tailwind, Redux)",
+    id: "proj-002",
+    title: "Enterprise Admin Dashboard",
+    slug: "admin-dashboard",
     description:
-      "Built and optimized web admin applications using Next.js for server-side rendering, Tailwind CSS for styling, and Redux for state management. Created modern, responsive interfaces for enterprise applications.",
+      "Optimized web admin applications using Next.js for SSR, Tailwind CSS for styling, and Redux for state management. Modern, responsive interfaces for enterprise systems.",
     tech: ["Next.js", "Tailwind CSS", "Redux", "TypeScript"],
-    image: "/api/placeholder/400/250",
+    lang: "TypeScript",
+    langColor: "#58a6ff",
     link: "#",
+    lines: 8920,
+    commits: 189,
   },
   {
-    title: "API Optimization & Microservices (Go/C#)",
+    id: "proj-003",
+    title: "API Optimization & Microservices",
+    slug: "microservices-api",
     description:
-      "Enhanced API performance through strategic optimization and refactoring using Go and C#. Implemented microservices architecture, reducing response times and improving scalability.",
-    tech: ["Go", "C#", "Microservices", "Docker"],
-    image: "/api/placeholder/400/250",
+      "High-performance API layer via Go and C# microservices. Implemented message queues with RabbitMQ, inter-service comms via gRPC, cutting response times by 60%.",
+    tech: ["Go", "C#", "RabbitMQ", "gRPC", "Docker"],
+    lang: "Go",
+    langColor: "#3fb950",
     link: "#",
+    lines: 15600,
+    commits: 312,
   },
   {
+    id: "proj-004",
     title: "Mobile & Desktop Applications",
+    slug: "mobile-desktop",
     description:
-      "Developed cross-platform mobile applications for Android using Java and desktop applications using various technologies. Focus on performance and user experience optimization.",
-    tech: ["Java", "Android", "Desktop Apps", "Cross-platform"],
-    image: "/api/placeholder/400/250",
+      "Cross-platform Android apps in Java with real-time Firebase location tracking. Desktop apps with Python, optimizing UX and performance across platforms.",
+    tech: ["Java", "Android", "Firebase", "Python"],
+    lang: "Java",
+    langColor: "#ffa657",
     link: "#",
+    lines: 6780,
+    commits: 145,
   },
   {
-    title: "IoT & Embedded Systems (Arduino)",
+    id: "proj-005",
+    title: "IoT & Embedded Systems",
+    slug: "iot-embedded",
     description:
-      "Created IoT solutions and embedded systems using Arduino platforms. Developed sensor integration, data collection systems, and real-time monitoring applications for various use cases.",
-    tech: ["Arduino", "IoT", "C++", "Embedded Systems"],
-    image: "/api/placeholder/400/250",
+      "Arduino-based IoT solutions with sensor integration, data collection, and real-time monitoring. Custom embedded firmware for industrial use cases.",
+    tech: ["Arduino", "C++", "IoT", "Embedded Systems"],
+    lang: "C++",
+    langColor: "#79c0ff",
     link: "#",
+    lines: 4200,
+    commits: 98,
   },
   {
-    title: "Web Crawling & Data Processing",
+    id: "proj-006",
+    title: "Web Crawling & Data Pipeline",
+    slug: "web-crawler",
     description:
-      "Built advanced web crawling solutions for data extraction and processing. Implemented automated data collection systems with robust error handling and data validation.",
-    tech: ["Python", "Web Scraping", "Data Processing", "Automation"],
-    image: "/api/placeholder/400/250",
+      "Advanced web crawlers for data extraction with robust error handling and validation. Automated data collection pipelines with scheduling and monitoring.",
+    tech: ["Python", "Scrapy", "Pandas", "Automation"],
+    lang: "Python",
+    langColor: "#e3b341",
     link: "#",
+    lines: 3450,
+    commits: 76,
   },
 ];
 
+const ProjectCard = ({
+  project,
+  index,
+}: {
+  project: (typeof projects)[0];
+  index: number;
+}) => {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      className="rounded-md overflow-hidden group"
+      style={{ background: "#161b22", border: "1px solid #30363d" }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.08, duration: 0.45 }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      whileHover={{ y: -4, borderColor: project.langColor + "50", boxShadow: `0 8px 28px ${project.langColor}15` }}
+    >
+      {/* Title bar */}
+      <div className="flex items-center gap-2 px-3 py-2.5" style={{ background: "#21262d", borderBottom: "1px solid #30363d" }}>
+        <div className="flex gap-1">
+          <div className="w-2 h-2 rounded-full bg-[#ff5f57]" />
+          <div className="w-2 h-2 rounded-full bg-[#febc2e]" />
+          <div className="w-2 h-2 rounded-full bg-[#28c840]" />
+        </div>
+        <span className="font-terminal text-xs text-[#8b949e] flex-1 ml-1 truncate">{project.slug}/</span>
+        <span
+          className="font-terminal text-xs px-1.5 py-0.5 rounded flex-shrink-0"
+          style={{ color: project.langColor, background: "#0d1117", border: "1px solid #30363d" }}
+        >
+          {project.lang}
+        </span>
+      </div>
+
+      {/* Body */}
+      <div className="p-4">
+        {/* ID + status */}
+        <div className="flex items-center justify-between mb-2 font-terminal text-xs">
+          <span style={{ color: "#484f58" }}>{project.id}</span>
+          <div className="flex items-center gap-1.5">
+            <motion.div
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: "#3fb950" }}
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <span style={{ color: "#3fb950" }}>deployed</span>
+          </div>
+        </div>
+
+        <h3 className="font-bold text-sm mb-2 transition-colors" style={{ color: hovered ? project.langColor : "#e6edf3" }}>
+          {project.title}
+        </h3>
+
+        <p className="text-xs leading-relaxed mb-3 font-terminal" style={{ color: "#8b949e" }}>
+          {project.description}
+        </p>
+
+        {/* Stats */}
+        <div className="flex gap-4 mb-3 font-terminal text-xs" style={{ color: "#484f58" }}>
+          <span><span style={{ color: "#3fb950" }}>~</span>{project.lines.toLocaleString()} lines</span>
+          <span><span style={{ color: "#3fb950" }}>⎇</span>{project.commits} commits</span>
+        </div>
+
+        {/* Tech tags */}
+        <div className="flex flex-wrap gap-1 mb-4">
+          {project.tech.map((t) => (
+            <motion.span
+              key={t}
+              className="font-terminal text-xs px-1.5 py-0.5 rounded-sm"
+              style={{ color: project.langColor, background: project.langColor + "15", border: `1px solid ${project.langColor}30` }}
+              whileHover={{ scale: 1.05 }}
+            >
+              {t}
+            </motion.span>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <AnimatePresence mode="wait">
+          {hovered ? (
+            <motion.div key="open" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }} transition={{ duration: 0.15 }}>
+              <a
+                href={project.link}
+                className="inline-flex items-center gap-2 font-terminal text-xs px-3 py-1.5 rounded-sm transition-all"
+                style={{ color: project.langColor, background: project.langColor + "15", border: `1px solid ${project.langColor}40` }}
+              >
+                <span>$</span><span>./open-project</span><span>→</span>
+              </a>
+            </motion.div>
+          ) : (
+            <motion.div key="hint" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <span className="font-terminal text-xs" style={{ color: "#484f58" }}>
+                <span style={{ color: "#30363d" }}>$ </span>hover to open →
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+};
+
 export default function Projects() {
   return (
-    <section id="projects" className="py-16 px-4 max-w-6xl mx-auto">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="text-center mb-12"
-      >
-        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-          Projects
-        </h2>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          Here are some of the projects I've worked on, showcasing my expertise
-          in backend development, full-stack applications, and various
-          technologies.
-        </p>
-      </motion.div>
+    <section id="projects" className="py-20 relative overflow-hidden">
+      {/* Faint grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(#21262d 1px, transparent 1px), linear-gradient(90deg, #21262d 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
+          opacity: 0.3,
+        }}
+      />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects.map((project, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            viewport={{ once: true }}
-            className="group relative"
-          >
-            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 h-full transition-all duration-300 hover:bg-white/10 hover:border-white/20">
-              <div className="aspect-video rounded-lg overflow-hidden mb-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20">
-                <div className="w-full h-full flex items-center justify-center text-white/50">
-                  <svg
-                    className="w-12 h-12"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div className="mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+          <div className="font-terminal text-xs mb-2" style={{ color: "#484f58" }}>
+            # project directory — {projects.length} repositories
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold">
+            <span className="gradient-text">ls -la</span>
+            <span className="font-terminal text-xl" style={{ color: "#484f58" }}> ~/projects/</span>
+          </h2>
+          <div className="mt-3 font-terminal text-xs" style={{ color: "#484f58" }}>
+            <span style={{ color: "#3fb950" }}>andika@dev</span>
+            <span style={{ color: "#484f58" }}>:~/projects$&nbsp;</span>
+            <span style={{ color: "#c9d1d9" }}>ls --color=auto -la</span>
+          </div>
+          <div className="mt-3 font-terminal text-xs pb-2" style={{ color: "#484f58", borderBottom: "1px solid #21262d" }}>
+            total {projects.length} &nbsp;·&nbsp; drwxr-xr-x &nbsp;·&nbsp; andika_dayu &nbsp;·&nbsp; staff
+          </div>
+        </motion.div>
 
-              <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">
-                {project.title}
-              </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
+        </div>
 
-              <p className="text-gray-400 mb-4 text-sm leading-relaxed">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tech.map((tech, techIndex) => (
-                  <span
-                    key={techIndex}
-                    className="px-3 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex gap-3 mt-auto">
-                <a
-                  href={project.link}
-                  className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                  </svg>
-                  View Details
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+        <motion.div
+          className="mt-10 font-terminal text-xs flex items-center gap-2"
+          style={{ color: "#484f58" }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          <span style={{ color: "#3fb950" }}>andika@dev</span>
+          <span style={{ color: "#484f58" }}>:~/projects$</span>
+          <motion.span style={{ color: "#3fb950" }} animate={{ opacity: [0, 1, 0] }} transition={{ duration: 1.2, repeat: Infinity }}>▮</motion.span>
+        </motion.div>
       </div>
     </section>
   );

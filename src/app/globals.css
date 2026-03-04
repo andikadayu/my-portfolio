@@ -17,100 +17,151 @@
   font-style: normal;
 }
 
+/* ── Design tokens ─────────────────────────────────────────────
+   GitHub-dark inspired: comfortable dark, muted professional
+   accent palette with harmonious syntax-highlight colours.
+───────────────────────────────────────────────────────────────*/
 :root {
-  /* Force Dark Mode Colors */
-  --foreground-rgb: 248, 250, 252; /* slate-50 */
-  --background-start-rgb: 15, 23, 42; /* slate-900 */
-  --background-end-rgb: 30, 41, 59; /* slate-800 */
-  --primary-accent: 129, 140, 248; /* indigo-400 */
-  --secondary-accent: 196, 181, 253; /* purple-400 */
-  --tertiary-accent: 56, 189, 248; /* sky-400 */
-  --card-background: 30, 41, 59; /* slate-800 */
-  --card-hover: 51, 65, 85; /* slate-700 */
-  --border-color: 51, 65, 85; /* slate-700 */
-  --text-muted: 148, 163, 184; /* slate-400 */
-  --gradient-from: 129, 140, 248; /* indigo-400 */
-  --gradient-to: 196, 181, 253; /* purple-400 */
+  /* Backgrounds */
+  --bg-base:        #0d1117;
+  --bg-card:        #161b22;
+  --bg-card-hover:  #1c2128;
+  --bg-surface:     #21262d;
+
+  /* Borders */
+  --border:         #30363d;
+  --border-muted:   #21262d;
+  --border-accent:  rgba(63, 185, 80, 0.35);
+
+  /* Text */
+  --text-primary:   #e6edf3;
+  --text-secondary: #c9d1d9;
+  --text-muted:     #8b949e;
+  --text-faint:     #484f58;
+
+  /* Accents — GitHub syntax palette */
+  --green:    #3fb950;  /* success / Go */
+  --blue:     #58a6ff;  /* links / keywords */
+  --purple:   #d2a8ff;  /* functions / types */
+  --orange:   #ffa657;  /* strings / numbers */
+  --cyan:     #79c0ff;  /* keys / identifiers */
+  --red:      #ff7b72;  /* deletions / errors */
+  --yellow:   #e3b341;  /* warnings / branches */
 }
 
-/* Remove light mode support - force dark mode only */
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
   font-family: 'Geist', sans-serif;
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
+  background-color: var(--bg-base);
+  color: var(--text-primary);
   min-height: 100vh;
-  transition: all 0.3s ease;
   overflow-x: hidden;
 }
 
-/* Force dark mode for all elements */
-*, *::before, *::after {
-  color-scheme: dark !important;
-}
-
-/* Ensure dark background always */
 html, body {
-  background-color: #0f172a !important;
-  color: #f8fafc !important;
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
 }
 
-/* Modern scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Terminal monospace */
+.font-terminal {
+  font-family: 'GeistMono', 'Courier New', Courier, monospace;
 }
 
-::-webkit-scrollbar-track {
-  background: rgb(var(--background-start-rgb));
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: #0d1117; }
+::-webkit-scrollbar-thumb  { background: #30363d; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #3fb950; }
+
+/* ── Terminal card ──────────────────────────────────────────── */
+.terminal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.25);
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgb(var(--primary-accent));
-  border-radius: 4px;
+.terminal-card:hover {
+  border-color: rgba(63, 185, 80, 0.4);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 8px 28px rgba(63,185,80,0.08);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--secondary-accent));
-}
-
-/* Modern glass effect */
+/* ── Glass effect ───────────────────────────────────────────── */
 .glass-effect {
   backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(22, 27, 34, 0.85);
+  border: 1px solid #30363d;
 }
 
-/* Modern gradient text */
+/* ── Gradient text — green → blue ──────────────────────────── */
 .gradient-text {
-  background: linear-gradient(
-    135deg,
-    rgb(var(--gradient-from)),
-    rgb(var(--gradient-to))
-  );
+  background: linear-gradient(135deg, #3fb950, #58a6ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.left-timeline {
-  flex-direction: row-reverse;
+/* ── Accent text helpers ────────────────────────────────────── */
+.hacker-text  { color: #3fb950; }
+.cyber-text   { color: #58a6ff; }
+
+/* ── Scanlines — very subtle ────────────────────────────────── */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.05) 3px,
+    rgba(0,0,0,0.05) 4px
+  );
+  pointer-events: none;
 }
 
-.left-timeline .order-1 {
-  order: 1;
+/* ── Blinking cursor ────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor-blink { animation: blink 1.06s step-end infinite; }
+
+/* ── Glitch animation ───────────────────────────────────────── */
+@keyframes glitch-1 {
+  0%,100% { clip-path: inset(0 0 90% 0); transform: translateX(-2px); }
+  25%     { clip-path: inset(40% 0 50% 0); transform: translateX(2px); }
+  50%     { clip-path: inset(80% 0 5% 0);  transform: translateX(-1px); }
+  75%     { clip-path: inset(15% 0 75% 0); transform: translateX(3px); }
+}
+@keyframes glitch-2 {
+  0%,100% { clip-path: inset(80% 0 5% 0);  transform: translateX(2px); }
+  25%     { clip-path: inset(20% 0 60% 0); transform: translateX(-2px); }
+  50%     { clip-path: inset(60% 0 25% 0); transform: translateX(1px); }
+  75%     { clip-path: inset(5% 0 85% 0);  transform: translateX(-3px); }
 }
 
-.right-timeline .order-1 {
-  order: 1;
+/* ── Code block ─────────────────────────────────────────────── */
+.code-block {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-left: 3px solid #3fb950;
+  font-family: 'GeistMono', 'Courier New', monospace;
 }
 
-.left-timeline .order-1:first-child {
-  margin-right: 0;
+/* ── Neon hover — soft glow on dark ────────────────────────── */
+.neon-hover {
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+.neon-hover:hover {
+  box-shadow: 0 4px 24px rgba(63,185,80,0.12), 0 0 0 1px rgba(63,185,80,0.3) !important;
+  border-color: rgba(63,185,80,0.4) !important;
 }
 
-.right-timeline .order-1:first-child {
-  margin-left: 0;
+/* ── Section divider ────────────────────────────────────────── */
+.section-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #30363d, transparent);
 }
