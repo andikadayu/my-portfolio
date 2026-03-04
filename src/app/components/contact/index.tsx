@@ -1,204 +1,243 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+
+const contactMethods = [
+  {
+    cmd: "mail",
+    args: "dikapolk@gmail.com",
+    label: "Email",
+    value: "dikapolk@gmail.com",
+    desc: "Drop me a line anytime",
+    link: "mailto:dikapolk@gmail.com",
+    accentColor: "#3fb950",
+  },
+  {
+    cmd: "telegram",
+    args: "@andikadayu",
+    label: "Telegram",
+    value: "@andikadayu",
+    desc: "Message me on Telegram",
+    link: "http://t.me/andikadayu",
+    accentColor: "#58a6ff",
+  },
+  {
+    cmd: "echo",
+    args: "$LOCATION",
+    label: "Location",
+    value: "Malang, Indonesia",
+    desc: "Open to remote work worldwide",
+    link: "#",
+    accentColor: "#d2a8ff",
+  },
+];
+
+const socialLinks = [
+  {
+    cmd: "gh",
+    args: "andikadayu",
+    label: "GitHub Personal",
+    url: "https://github.com/andikadayu",
+    desc: "Personal repos",
+    accentColor: "#c9d1d9",
+  },
+  {
+    cmd: "gh",
+    args: "andikaventuro",
+    label: "GitHub Work",
+    url: "https://github.com/andikaventuro",
+    desc: "Work repos",
+    accentColor: "#c9d1d9",
+  },
+  {
+    cmd: "linkedin",
+    args: "--connect",
+    label: "LinkedIn",
+    url: "https://www.linkedin.com/in/muhammad-andika-dayu-anglita-putra-796838142/",
+    desc: "Professional network",
+    accentColor: "#58a6ff",
+  },
+];
+
+const BlinkCursor = () => {
+  const [show, setShow] = useState(true);
+  useEffect(() => {
+    const t = setInterval(() => setShow((s) => !s), 530);
+    return () => clearInterval(t);
+  }, []);
+  return <span style={{ color: "#3fb950", opacity: show ? 1 : 0 }} className="transition-opacity duration-75">▮</span>;
+};
 
 const Contact = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        staggerChildren: 0.1,
-      },
-    },
+    visible: { opacity: 1, transition: { duration: 0.5, staggerChildren: 0.1 } },
   };
-
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut" as const,
-      },
-    },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
   };
-
-  const contactMethods = [
-    {
-      icon: "📧",
-      title: "Email",
-      value: "dikapolk@gmail.com",
-      description: "Drop me a line anytime",
-      link: "mailto:dikapolk@gmail.com",
-      gradient: "from-blue-500 to-cyan-500",
-    },
-    {
-      icon: "📞",
-      title: "Telegram",
-      value: "@andikadayu",
-      description: "Message me on Telegram",
-      link: "http://t.me/andikadayu",
-      gradient: "from-blue-400 to-blue-600",
-    },
-    {
-      icon: "📍",
-      title: "Location",
-      value: "Malang, Indonesia",
-      description: "Open to remote work",
-      link: "#",
-      gradient: "from-purple-500 to-pink-500",
-    },
-  ];
-
-  const socialLinks = [
-    {
-      name: "GitHub Personal",
-      icon: "🐙",
-      url: "https://github.com/andikadayu",
-      description: "Check out my repositories",
-      gradient: "from-gray-600 to-gray-800",
-    },
-    {
-      name: "LinkedIn",
-      icon: "💼",
-      url: "https://www.linkedin.com/in/muhammad-andika-dayu-anglita-putra-796838142/",
-      description: "Professional network",
-      gradient: "from-blue-600 to-blue-800",
-    },
-    {
-      name: "GitHub Work",
-      icon: "🐙",
-      url: "https://github.com/andikaventuro",
-      description: "Check out my repositories",
-      gradient: "from-gray-600 to-gray-800",
-    },
-    {
-      name: "WhatsApp",
-      icon: "💬",
-      url: "https://wa.me/6282174620190",
-      description: "Quick messages",
-      gradient: "from-green-500 to-emerald-600",
-    },
-  ];
 
   return (
-    <section
-      id="contact"
-      className="py-20 bg-gradient-to-br from-gray-900/50 to-blue-900/20"
-    >
-      <motion.div
-        className="container mx-auto px-4"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        <motion.div className="text-center mb-16" variants={itemVariants}>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="gradient-text">Get In Touch</span>
-          </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Ready to start your next project? Let's create something amazing
-            together
-          </p>
-        </motion.div>
-
-        {/* Contact Methods */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {contactMethods.map((method, index) => (
-            <motion.a
-              key={method.title}
-              href={method.link}
-              className="group glass-effect rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300 block"
-              variants={itemVariants}
-              whileHover={{ y: -10, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <div className="text-center">
-                <div
-                  className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r ${method.gradient} mb-4 text-2xl`}
-                >
-                  {method.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">
-                  {method.title}
-                </h3>
-                <p
-                  className={`font-semibold mb-2 bg-gradient-to-r ${method.gradient} bg-clip-text text-transparent`}
-                >
-                  {method.value}
-                </p>
-                <p className="text-gray-400 text-sm">{method.description}</p>
-              </div>
-            </motion.a>
-          ))}
-        </div>
-
-        {/* CTA Section */}
-        <motion.div className="text-center mb-16" variants={itemVariants}>
-          <div className="glass-effect rounded-2xl p-8 border border-white/10 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Ready to start a project?
-            </h3>
-            <p className="text-gray-300 mb-6">
-              I'm currently available for backend development projects and
-              exciting opportunities. Let's discuss how we can build robust and
-              scalable solutions together.
-            </p>
-            <motion.a
-              href="mailto:dikapolk@gmail.com"
-              className="inline-flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span>Send me an email</span>
-              <span>✉️</span>
-            </motion.a>
-          </div>
-        </motion.div>
-
-        {/* Social Links */}
-        <motion.div variants={itemVariants}>
-          <h3 className="text-2xl font-bold text-center text-white mb-8">
-            Follow me on social media
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {socialLinks.map((social, index) => (
-              <motion.a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group glass-effect rounded-xl p-4 border border-white/10 hover:border-white/20 transition-all duration-300 text-center"
-                whileHover={{ y: -5, scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <div
-                  className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r ${social.gradient} mb-3 text-xl`}
-                >
-                  {social.icon}
-                </div>
-                <h4 className="font-semibold text-white mb-1">{social.name}</h4>
-                <p className="text-gray-400 text-xs">{social.description}</p>
-              </motion.a>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Footer */}
+    <section id="contact" className="py-20 relative overflow-hidden">
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          className="text-center mt-16 pt-8 border-t border-white/10"
-          variants={itemVariants}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <p className="text-gray-400">
-            © 2024 Muhammad Andika Dayu Anglita Putra. Made with ❤️ using
-            Next.js and Tailwind CSS
-          </p>
+          {/* Header */}
+          <motion.div className="mb-12" variants={itemVariants}>
+            <div className="font-terminal text-xs mb-2" style={{ color: "#484f58" }}># contact — establish connection</div>
+            <h2 className="text-3xl md:text-4xl font-bold">
+              <span className="gradient-text">ssh</span>
+              <span className="font-terminal text-xl" style={{ color: "#484f58" }}> andika@malang.id</span>
+            </h2>
+            <div className="mt-3 font-terminal text-xs" style={{ color: "#484f58" }}>
+              <span style={{ color: "#3fb950" }}>local</span>
+              <span style={{ color: "#484f58" }}>:~$&nbsp;</span>
+              <span style={{ color: "#c9d1d9" }}>ssh -i ~/.ssh/contact andika@andikadayu.my.id</span>
+            </div>
+          </motion.div>
+
+          {/* SSH terminal */}
+          <motion.div variants={itemVariants} className="mb-8">
+            <div
+              className="rounded-md overflow-hidden max-w-2xl"
+              style={{ background: "#161b22", border: "1px solid #30363d", boxShadow: "0 4px 24px rgba(0,0,0,0.4)" }}
+            >
+              {/* Title bar */}
+              <div className="flex items-center gap-2 px-4 py-3" style={{ background: "#21262d", borderBottom: "1px solid #30363d" }}>
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                </div>
+                <span className="font-terminal text-xs ml-2" style={{ color: "#484f58" }}>
+                  ssh — andika@andikadayu.my.id — 80×24
+                </span>
+              </div>
+
+              {/* Body */}
+              <div className="p-5 font-terminal text-xs space-y-4" style={{ background: "#0d1117" }}>
+                <div className="italic" style={{ color: "#484f58" }}>Connected to andikadayu.my.id · Welcome, traveller.</div>
+
+                {contactMethods.map((method, i) => (
+                  <motion.div
+                    key={method.label}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.12, duration: 0.4 }}
+                  >
+                    <div className="flex items-center gap-1 mb-1">
+                      <span style={{ color: "#3fb950" }}>andika@dev</span>
+                      <span style={{ color: "#484f58" }}>:~$&nbsp;</span>
+                      <span style={{ color: "#c9d1d9" }}>{method.cmd}</span>
+                      <span style={{ color: "#ffa657" }}>&nbsp;{method.args}</span>
+                    </div>
+                    <motion.a
+                      href={method.link}
+                      className="flex items-center gap-3 p-2 rounded-sm group transition-all"
+                      style={{ borderLeft: `2px solid ${method.accentColor}40`, paddingLeft: "12px", background: method.accentColor + "08" }}
+                      whileHover={{ x: 4, background: method.accentColor + "14" }}
+                    >
+                      <div>
+                        <div className="font-semibold" style={{ color: method.accentColor }}>{method.value}</div>
+                        <div style={{ color: "#8b949e" }}>{method.desc}</div>
+                      </div>
+                      <span className="ml-auto transition-colors" style={{ color: "#484f58" }}>→</span>
+                    </motion.a>
+                  </motion.div>
+                ))}
+
+                {/* CTA */}
+                <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.45 }}>
+                  <div className="flex items-center gap-1 mb-2">
+                    <span style={{ color: "#3fb950" }}>andika@dev</span>
+                    <span style={{ color: "#484f58" }}>:~$&nbsp;</span>
+                    <span style={{ color: "#c9d1d9" }}>send-email --subject</span>
+                    <span style={{ color: "#ffa657" }}>&nbsp;&quot;Let&apos;s collaborate&quot;</span>
+                  </div>
+                  <motion.a
+                    href="mailto:dikapolk@gmail.com"
+                    className="inline-flex items-center gap-2 mt-1 px-4 py-2 text-xs font-terminal rounded-sm transition-all"
+                    style={{ background: "#238636", color: "#ffffff", border: "1px solid #2ea043" }}
+                    whileHover={{ scale: 1.02, boxShadow: "0 4px 16px rgba(63,185,80,0.3)", y: -1 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <span style={{ color: "#7ee787" }}>$</span>
+                    ./send-message.sh
+                    <motion.span animate={{ x: [0, 3, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>→</motion.span>
+                  </motion.a>
+                </motion.div>
+
+                {/* Waiting prompt */}
+                <div className="flex items-center gap-1">
+                  <span style={{ color: "#3fb950" }}>andika@dev</span>
+                  <span style={{ color: "#484f58" }}>:~$&nbsp;</span>
+                  <BlinkCursor />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Social links */}
+          <motion.div variants={itemVariants}>
+            <div className="font-terminal text-xs mb-4" style={{ color: "#484f58" }}># social links — find me online</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
+              {socialLinks.map((social, i) => (
+                <motion.a
+                  key={social.label}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-md p-3 block neon-hover"
+                  style={{ background: "#161b22", border: "1px solid #30363d" }}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.4 }}
+                  whileHover={{ y: -3, borderColor: social.accentColor + "50" }}
+                >
+                  <div className="font-terminal text-xs">
+                    <div className="flex items-center gap-1 mb-1.5">
+                      <span style={{ color: "#3fb950" }}>$</span>
+                      <span style={{ color: "#8b949e" }}>{social.cmd}</span>
+                      <span style={{ color: social.accentColor }}>{social.args}</span>
+                    </div>
+                    <div className="font-semibold text-xs mb-0.5" style={{ color: social.accentColor }}>{social.label}</div>
+                    <div className="text-xs" style={{ color: "#484f58" }}>{social.desc}</div>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Footer */}
+          <motion.div
+            className="mt-16 pt-6 font-terminal text-xs flex flex-col md:flex-row items-center justify-between gap-4"
+            style={{ color: "#484f58", borderTop: "1px solid #21262d" }}
+            variants={itemVariants}
+          >
+            <div><span style={{ color: "#3fb950" }}>©</span> 2024 Muhammad Andika Dayu Anglita Putra</div>
+            <div className="flex items-center gap-2">
+              <span>Built with</span>
+              <span style={{ color: "#58a6ff" }}>Next.js</span>
+              <span>+</span>
+              <span style={{ color: "#3fb950" }}>Framer Motion</span>
+              <span>+</span>
+              <span style={{ color: "#79c0ff" }}>TypeScript</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <motion.span style={{ color: "#3fb950" }} animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 2, repeat: Infinity }}>●</motion.span>
+              <span>// EOF</span>
+            </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };
