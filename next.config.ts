@@ -25,6 +25,20 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: [
           {
+            key: "Access-Control-Allow-Origin",
+            value: "https://andikadayu.my.id",
+          },
+          {
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self'; frame-ancestors 'none';",
+          },
+          {
+            key: "Permissions-Policy",
+            value:
+              "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+          },
+          {
             key: "X-Frame-Options",
             value: "DENY",
           },
@@ -34,7 +48,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Referrer-Policy",
-            value: "origin-when-cross-origin",
+            value: "strict-origin-when-cross-origin",
           },
           {
             key: "X-XSS-Protection",
@@ -52,6 +66,16 @@ const nextConfig: NextConfig = {
         source: "/home",
         destination: "/",
         permanent: true,
+      },
+      {
+        source: "/wp-admin/:path*",
+        destination: "/not-found",
+        permanent: false,
+      },
+      {
+        source: "/wp-login.php",
+        destination: "/not-found",
+        permanent: false,
       },
     ];
   },
