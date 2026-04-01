@@ -82,7 +82,7 @@ export const metadata: Metadata = {
   category: "technology",
   classification: "Portfolio Website",
   verification: {
-    google: "v49p2JHxag6KyM21YlgTMz0LVco1EcYtXBhkyzHlgT4", // Replace with actual verification code
+    google: "v49p2JHxag6KyM21YlgTMz0LVco1EcYtXBhkyzHlgT4",
   },
 };
 
@@ -92,17 +92,42 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth dark" data-theme="dark">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
-        <meta name="theme-color" content="#0f172a" />
-        <meta name="color-scheme" content="dark" />
+        <meta
+          name="theme-color"
+          content="#f8fafc"
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="theme-color"
+          content="#0f172a"
+          media="(prefers-color-scheme: dark)"
+        />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
+        {/* Theme detection script — runs before first paint to prevent FOUC */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var theme = stored || (prefersDark ? 'dark' : 'light');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -156,7 +181,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-slate-900 text-white antialiased dark">{children}</body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
