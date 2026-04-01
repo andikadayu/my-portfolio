@@ -1,227 +1,186 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
-const skills = [
+const skillCategories = [
   {
-    category: "Backend Development",
-    file: "backend.go",
-    lang: "Go",
-    color: "#3fb950",
-    borderColor: "#30363d",
-    bgTitle: "#161b22",
-    glowColor: "rgba(63,185,80,0.1)",
+    title: "Backend Development",
+    icon: "⚙️",
+    gradient: "from-emerald-500 to-teal-600",
+    accentText: "text-emerald-700 dark:text-emerald-400",
+    accentBadge:
+      "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400",
     skills: [
-      { name: "Go", icon: "🐹" },
-      { name: "C# .NET", icon: "🔷" },
-      { name: "Python", icon: "🐍" },
-      { name: "PHP", icon: "🐘" },
-      { name: "Laravel", icon: "🔴" },
+      { name: "Go",       icon: "🐹" },
+      { name: "C# .NET",  icon: "🔷" },
+      { name: "Python",   icon: "🐍" },
+      { name: "PHP",      icon: "🐘" },
+      { name: "Laravel",  icon: "🔴" },
     ],
   },
   {
-    category: "Frontend & Full-Stack",
-    file: "frontend.tsx",
-    lang: "TypeScript",
-    color: "#58a6ff",
-    borderColor: "#30363d",
-    bgTitle: "#161b22",
-    glowColor: "rgba(88,166,255,0.1)",
+    title: "Frontend & Full-Stack",
+    icon: "🎨",
+    gradient: "from-blue-500 to-indigo-600",
+    accentText: "text-blue-700 dark:text-blue-400",
+    accentBadge:
+      "bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/20 text-blue-700 dark:text-blue-400",
     skills: [
-      { name: "React", icon: "⚛️" },
-      { name: "Next.js", icon: "▲" },
-      { name: "TypeScript", icon: "🔷" },
+      { name: "React",        icon: "⚛️" },
+      { name: "Next.js",      icon: "▲" },
+      { name: "TypeScript",   icon: "📘" },
       { name: "Tailwind CSS", icon: "💨" },
-      { name: "Redux", icon: "🔄" },
+      { name: "Redux",        icon: "🔄" },
     ],
   },
   {
-    category: "Databases & Messaging",
-    file: "database.yaml",
-    lang: "YAML",
-    color: "#d2a8ff",
-    borderColor: "#30363d",
-    bgTitle: "#161b22",
-    glowColor: "rgba(210,168,255,0.1)",
+    title: "Databases & Messaging",
+    icon: "🗄️",
+    gradient: "from-violet-500 to-purple-600",
+    accentText: "text-violet-700 dark:text-violet-400",
+    accentBadge:
+      "bg-violet-50 dark:bg-violet-500/10 border-violet-200 dark:border-violet-500/20 text-violet-700 dark:text-violet-400",
     skills: [
-      { name: "MongoDB", icon: "🍃" },
-      { name: "Redis Cache", icon: "🔴" },
-      { name: "Firebase", icon: "🔥" },
-      { name: "RabbitMQ", icon: "🐰" },
-      { name: "gRPC", icon: "⚡" },
+      { name: "MongoDB",    icon: "🍃" },
+      { name: "Redis",      icon: "🔴" },
+      { name: "Firebase",   icon: "🔥" },
+      { name: "RabbitMQ",   icon: "🐰" },
+      { name: "gRPC",       icon: "⚡" },
     ],
   },
   {
-    category: "Mobile & IoT",
-    file: "embedded.cpp",
-    lang: "C++",
-    color: "#ffa657",
-    borderColor: "#30363d",
-    bgTitle: "#161b22",
-    glowColor: "rgba(255,166,87,0.1)",
+    title: "Mobile & IoT",
+    icon: "📱",
+    gradient: "from-orange-500 to-amber-500",
+    accentText: "text-orange-700 dark:text-orange-400",
+    accentBadge:
+      "bg-orange-50 dark:bg-orange-500/10 border-orange-200 dark:border-orange-500/20 text-orange-700 dark:text-orange-400",
     skills: [
       { name: "Java (Android)", icon: "☕" },
-      { name: "Arduino", icon: "🔌" },
-      { name: "IoT Systems", icon: "📡" },
-      { name: "Embedded", icon: "💾" },
-      { name: "Microservices", icon: "🔗" },
+      { name: "Arduino",        icon: "🔌" },
+      { name: "IoT Systems",    icon: "📡" },
+      { name: "Embedded",       icon: "💾" },
+      { name: "Microservices",  icon: "🔗" },
     ],
   },
 ];
 
-const TerminalCard = ({
+const cardVariants = {
+  hidden:  { opacity: 0, y: 32 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.12, duration: 0.5, ease: "easeOut" },
+  }),
+};
+
+const SkillCard = ({
   category,
   index,
 }: {
-  category: (typeof skills)[0];
+  category: (typeof skillCategories)[0];
   index: number;
-}) => {
-  const [expanded, setExpanded] = useState(true);
+}) => (
+  <motion.div
+    className="card rounded-2xl overflow-hidden"
+    custom={index}
+    variants={cardVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true }}
+    whileHover={{ y: -5 }}
+    transition={{ type: "spring", stiffness: 250, damping: 20 }}
+  >
+    {/* Top accent bar */}
+    <div className={`h-1 w-full bg-gradient-to-r ${category.gradient}`} />
 
-  return (
-    <motion.div
-      className="rounded-md overflow-hidden neon-hover"
-      style={{ background: "#161b22", border: `1px solid ${category.borderColor}` }}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.12, duration: 0.5 }}
-      whileHover={{ boxShadow: `0 8px 30px ${category.glowColor}` }}
-    >
-      {/* Title bar */}
-      <div
-        className="flex items-center gap-2 px-4 py-2.5 cursor-pointer select-none"
-        style={{ background: "#21262d", borderBottom: "1px solid #30363d" }}
-        onClick={() => setExpanded((e) => !e)}
-      >
-        <div className="flex gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-          <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-          <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+    <div className="p-6">
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-5">
+        <div
+          className={`w-10 h-10 rounded-xl bg-gradient-to-br ${category.gradient} flex items-center justify-center text-xl shadow-md`}
+        >
+          {category.icon}
         </div>
-        <span className="font-terminal text-xs text-[#8b949e] flex-1 ml-2">{category.file}</span>
-        <span
-          className="font-terminal text-xs px-1.5 py-0.5 rounded"
-          style={{ color: category.color, background: "#0d1117", border: "1px solid #30363d" }}
-        >
-          {category.lang}
-        </span>
-        <motion.span
-          className="font-terminal text-xs text-[#484f58] ml-2"
-          animate={{ rotate: expanded ? 0 : -90 }}
-          transition={{ duration: 0.2 }}
-        >
-          ▾
-        </motion.span>
+        <h3 className={`font-semibold ${category.accentText}`}>
+          {category.title}
+        </h3>
       </div>
 
-      {/* Content */}
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            className="p-4 font-terminal text-xs"
-            style={{ background: "#161b22" }}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
+      {/* Skill badges */}
+      <div className="flex flex-wrap gap-2">
+        {category.skills.map((skill, si) => (
+          <motion.span
+            key={skill.name}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border ${category.accentBadge}`}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.08 + si * 0.05, duration: 0.3 }}
+            whileHover={{ scale: 1.07 }}
           >
-            {/* Comment */}
-            <div className="mb-3 italic" style={{ color: "#484f58" }}>
-              // {category.category.toLowerCase().replace(/ /g, "_")}
-            </div>
-
-            {/* Skill list */}
-            <div className="space-y-0.5">
-              {category.skills.map((skill, si) => (
-                <motion.div
-                  key={skill.name}
-                  className="flex items-center gap-2 py-1.5"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.06 + si * 0.04, duration: 0.3 }}
-                  whileHover={{ x: 3 }}
-                >
-                  <span style={{ color: "#484f58" }} className="select-none">&gt;</span>
-                  <span className="text-base leading-none">{skill.icon}</span>
-                  <span style={{ color: category.color }} className="font-medium">{skill.name}</span>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Footer */}
-            <div className="mt-2 italic" style={{ color: "#484f58" }}>
-              // {category.skills.length} skills loaded ✓
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-};
+            <span className="leading-none">{skill.icon}</span>
+            <span>{skill.name}</span>
+          </motion.span>
+        ))}
+      </div>
+    </div>
+  </motion.div>
+);
 
 const Skills = () => {
+  const totalSkills = skillCategories.reduce((a, c) => a + c.skills.length, 0);
+
   return (
-    <section id="skills" className="py-20 relative overflow-hidden" aria-label="Technical Skills">
-      {/* Faint grid */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(#21262d 1px, transparent 1px), linear-gradient(90deg, #21262d 1px, transparent 1px)`,
-          backgroundSize: "48px 48px",
-          opacity: 0.35,
-        }}
-      />
+    <section id="skills" className="py-24 relative" aria-label="Technical Skills">
+      {/* Subtle section bg tint */}
+      <div className="absolute inset-0 bg-slate-50/60 dark:bg-slate-900/40 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
+        {/* Section header */}
         <motion.div
-          className="mb-12"
+          className="mb-12 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="font-terminal text-xs mb-2" style={{ color: "#484f58" }}>
-            # skills &amp; expertise — {skills.reduce((a, c) => a + c.skills.length, 0)} technologies
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 text-xs font-medium mb-4 shadow-sm">
+            Technical Skills &nbsp;·&nbsp; {totalSkills} Technologies
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold">
-            <span className="gradient-text">tech_stack</span>
-            <span className="font-terminal text-2xl" style={{ color: "#484f58" }}>.json</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+            My{" "}
+            <span className="gradient-text">Tech Stack</span>
           </h2>
-          <div className="mt-3 font-terminal text-xs" style={{ color: "#484f58" }}>
-            <span style={{ color: "#3fb950" }}>andika@dev</span>
-            <span style={{ color: "#484f58" }}>:~$&nbsp;</span>
-            <span style={{ color: "#c9d1d9" }}>cat skills.json | jq</span>
-          </div>
+          <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+            Technologies I use to craft scalable, high-performance applications
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
-          {skills.map((category, i) => (
-            <TerminalCard key={category.category} category={category} index={i} />
+        {/* Cards grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+          {skillCategories.map((category, i) => (
+            <SkillCard key={category.title} category={category} index={i} />
           ))}
         </div>
 
-        {/* Footer */}
+        {/* Currently learning footer */}
         <motion.div
-          className="font-terminal text-xs flex items-center gap-3"
-          style={{ color: "#8b949e" }}
+          className="flex items-center justify-center gap-3 text-sm"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
           <motion.span
-            style={{ color: "#3fb950" }}
+            className="w-2 h-2 rounded-full bg-emerald-500"
             animate={{ opacity: [0.4, 1, 0.4] }}
             transition={{ duration: 2, repeat: Infinity }}
-          >●</motion.span>
-          <span style={{ color: "#484f58" }}>Currently learning:</span>
-          <span style={{ color: "#58a6ff" }}>AI/ML Integration</span>
-          <span style={{ color: "#30363d" }}>|</span>
-          <span style={{ color: "#3fb950" }}>LLM APIs</span>
+          />
+          <span className="text-slate-400 dark:text-slate-500">Currently exploring:</span>
+          <span className="text-blue-600 dark:text-blue-400 font-medium">AI/ML Integration</span>
+          <span className="text-slate-300 dark:text-slate-600">·</span>
+          <span className="text-violet-600 dark:text-violet-400 font-medium">LLM APIs</span>
         </motion.div>
       </div>
     </section>
