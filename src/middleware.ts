@@ -4,10 +4,14 @@ export function middleware(request: NextRequest) {
   // Add security headers
   const response = NextResponse.next();
 
+  // Request tracing
+  const requestId = crypto.randomUUID();
+  response.headers.set("X-Request-ID", requestId);
+
   // Security headers
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("Referrer-Policy", "origin-when-cross-origin");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set("X-XSS-Protection", "1; mode=block");
 
   // Performance headers
