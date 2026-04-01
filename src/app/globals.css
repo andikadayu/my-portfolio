@@ -1,7 +1,14 @@
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Dark mode: apply dark: variants when .dark class is on an ancestor */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Custom background images (ported from tailwind.config.ts) */
+@theme {
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
+}
 
 @font-face {
   font-family: 'Geist';
